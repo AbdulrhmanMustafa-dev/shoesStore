@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "323518590304",
+    "project_id": "shoesstore-4e48b",
+    "storage_bucket": "shoesstore-4e48b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:323518590304:android:13b23a8e3a6b77f4ad0205",
+        "android_client_info": {
+          "package_name": "com.example.kicksvibe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "323518590304-e9u2ghbptn6f8321djmduadnqb7kmlbr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kicksvibe",
+            "certificate_hash": "961e705fb2a9662d29b6ed4ab9cd0aa4c9c6e600"
+          }
+        },
+        {
+          "client_id": "323518590304-ps0cvbc82g00hupd6ibrl6933us588jn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTnbcWePH52V9-wySjaL7Kjmtqe2mqX1U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "323518590304-ps0cvbc82g00hupd6ibrl6933us588jn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "323518590304-4ivnpqml1328a7n9dk8ds9imaln9diut.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.kicksvibe"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
