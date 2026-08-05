@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kicksvibe/core/di/injection.dart';
 import 'package:kicksvibe/core/routes/app_router.dart';
 import 'package:kicksvibe/core/routes/app_routes.dart';
 import 'package:kicksvibe/core/utils/CacheHelper.dart';
@@ -11,7 +12,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await CacheHelper.init();
-
+  configureDependencies();
   runApp(MyApp(appRouter: AppRouter()));
 }
 
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider<AuthCubit>(create: (context) => AuthCubit())],
+      providers: [BlocProvider<AuthCubit>(create: (context) => getIt<AuthCubit>())],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'KicksVibe',

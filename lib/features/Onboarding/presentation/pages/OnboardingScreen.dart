@@ -5,10 +5,21 @@ import 'package:kicksvibe/features/Onboarding/presentation/models/OnboardingMode
 import 'package:kicksvibe/features/Onboarding/presentation/widgets/onboarding_background.dart';
 import '../cubit/onboarding_cubit.dart';
 
-class OnboardingScreen extends StatelessWidget {
+class OnboardingScreen extends StatefulWidget {
   OnboardingScreen({super.key});
 
-  final PageController _pageController = PageController();
+  @override
+  State<OnboardingScreen> createState() => _OnboardingScreenState();
+}
+
+class _OnboardingScreenState extends State<OnboardingScreen> {
+  late final PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(); // تهيئة
+  }
 
   final List<OnboardingModel> screens = [
     OnboardingModel(
@@ -98,8 +109,13 @@ class OnboardingScreen extends StatelessWidget {
                           onPressed: () {
                             if (currentIndex == screens.length - 1) {
                               print("Navigate to Login/Home");
-                              context.read<OnboardingCubit>().finishOnboarding();
-                              Navigator.pushReplacementNamed(context, AppRoutes.login); // Replace with your login route
+                              context
+                                  .read<OnboardingCubit>()
+                                  .finishOnboarding();
+                              Navigator.pushReplacementNamed(
+                                context,
+                                AppRoutes.login,
+                              ); // Replace with your login route
                             } else {
                               _pageController.nextPage(
                                 duration: const Duration(milliseconds: 300),
@@ -138,6 +154,12 @@ class OnboardingScreen extends StatelessWidget {
       ),
     );
   }
+
+@override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  } 
 
   Widget _buildDot(int index, int currentIndex) {
     return AnimatedContainer(

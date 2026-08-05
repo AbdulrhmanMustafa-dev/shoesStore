@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kicksvibe/features/Home/presentation/cubit/home_cubit.dart';
+import 'package:kicksvibe/features/Home/presentation/widgets/brands_list.dart';
 import 'package:kicksvibe/features/Home/presentation/widgets/home_header.dart';
+import 'package:kicksvibe/features/Home/presentation/widgets/new_arrivals_card.dart';
+import 'package:kicksvibe/features/Home/presentation/widgets/popular_shoes_list.dart';
+import 'package:kicksvibe/features/Home/presentation/widgets/search_bar_widget.dart';
+import 'package:kicksvibe/features/Home/presentation/widgets/section_title.dart';
 import 'package:kicksvibe/features/Home/presentation/widgets/shoe_card.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -72,26 +79,34 @@ class HomeScreen extends StatelessWidget {
 
       // 2. محتوى الشاشة
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // سنقوم بإنشاء هذه الـ Widgets في الخطوات القادمة
-              const HomeHeader(),
-              const SizedBox(height: 24),
-              const SearchBarWidget(),
-              const SizedBox(height: 24),
-              const BrandsList(),
-              const SizedBox(height: 24),
-              SectionTitle(title: 'Popular Shoes', onTap: () {}),
-              const SizedBox(height: 16),
-              const PopularShoesList(),
-              const SizedBox(height: 24),
-              SectionTitle(title: 'New Arrivals', onTap: () {}),
-              const SizedBox(height: 16),
-              const NewArrivalsCard(),
-            ],
+        child: RefreshIndicator(
+          color: const Color(0xFF5A9AE5), // لون دائرة التحميل ليتماشى مع تصميمك
+          onRefresh: () async {
+            // 2. استدعاء دالة جلب البيانات من الكيوبت عند السحب
+            await context.read<HomeCubit>().fetchHomeData();
+          },
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // سنقوم بإنشاء هذه الـ Widgets في الخطوات القادمة
+                const HomeHeader(),
+                const SizedBox(height: 24),
+                const SearchBarWidget(),
+                const SizedBox(height: 24),
+                const BrandsList(),
+                const SizedBox(height: 24),
+                SectionTitle(title: 'Popular Shoes', onTap: () {}),
+                const SizedBox(height: 16),
+                const PopularShoesList(),
+                const SizedBox(height: 24),
+                SectionTitle(title: 'New Arrivals', onTap: () {}),
+                const SizedBox(height: 16),
+                const NewArrivalsCard(),
+              ],
+            ),
           ),
         ),
       ),

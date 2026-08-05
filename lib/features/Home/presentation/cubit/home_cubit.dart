@@ -1,43 +1,62 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kicksvibe/features/Home/data/models/product_model.dart';
+import 'package:kicksvibe/features/Home/data/models/brand_model.dart';
+import 'package:injectable/injectable.dart';
+
 part 'home_state.dart';
 
+@injectable
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit() : super(HomeInitial());
+  final FirebaseFirestore _firestore;
 
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  List<ProductModel> allProducts = []; // تخزين كل المنتجات محلياً
+  HomeCubit(this._firestore) : super(HomeInitial());
 
-  final List<String> brands = ['Nike', 'Puma', 'Under Armour', 'Adidas', 'Converse'];
-  String selectedBrand = 'Nike';
+  List<ProductModel> allProducts = [];
+  List<BrandModel> brands = [];
+  String selectedBrand = 'All'; // الديفولت هو All
 
-  // 1. جلب المنتجات من فايربيس
-  Future<void> fetchProducts() async {
+  Future<void> fetchHomeData() async {
     emit(HomeLoading());
     try {
-      final snapshot = await _firestore.collection('products').get();
-      
-      allProducts = snapshot.docs.map((doc) {
-        return ProductModel.fromJson(doc.data(), doc.id);
-      }).toList();
+      // 1. جلب الماركات وإضافة "All" كأول عنصر
+      final brandSnapshot = await _firestore.collection('brands').get();
+      brands = [BrandModel(id: '0', title: 'All', iconUrl: '')];
+      brands.addAll(
+        brandSnapshot.docs.map(
+          (doc) => BrandModel.fromJson(doc.data(), doc.id),
+        ),
+      );
 
-      // تصفية المنتجات للماركة الافتراضية
+      // 2. جلب جميع المنتجات
+      final productSnapshot = await _firestore.collection('products').get();
+      allProducts = productSnapshot.docs
+          .map((doc) => ProductModel.fromJson(doc.data(), doc.id))
+          .toList();
+
+      // 3. التصفية المبدئية
       filterProductsByBrand(selectedBrand);
     } catch (e) {
-      emit(HomeError( "حدث خطأ أثناء جلب البيانات: ${e.toString()}"));
+      emit(HomeError("حدث خطأ أثناء جلب البيانات: ${e.toString()}"));
     }
   }
 
-  // 2. تغيير الماركة والتصفية
-  void changeBrand(String brand) {
-    selectedBrand = brand;
-    filterProductsByBrand(brand);
+  void changeBrand(String brandTitle) {
+    selectedBrand = brandTitle;
+    filterProductsByBrand(brandTitle);
   }
 
-  // 3. تصفية المنتجات من القائمة المحفوظة (بدون عمل Request جديد لفايربيس)
-  void filterProductsByBrand(String brand) {
-    final filteredList = allProducts.where((product) => product.category == brand).toList();
-    emit(HomeLoaded(filteredList));
+  void filterProductsByBrand(String brandTitle) {
+    List<ProductModel> filteredList = brandTitle == 'All'
+        ? allProducts
+        : allProducts
+              .where((product) => product.category == brandTitle)
+              .toList();
+
+    // التقسيم لـ Popular و New Arrivals
+    final popular = filteredList.where((p) => p.isBestSeller).toList();
+    final newArrivals = filteredList.where((p) => !p.isBestSeller).toList();
+
+    emit(HomeLoaded(popularProducts: popular, newArrivalProducts: newArrivals));
   }
 }

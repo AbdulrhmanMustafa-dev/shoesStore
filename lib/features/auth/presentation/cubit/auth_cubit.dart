@@ -1,15 +1,16 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:injectable/injectable.dart';
 import 'package:kicksvibe/core/utils/CacheHelper.dart';
 
 part 'auth_state.dart';
 
+@injectable
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit() : super(AuthInitial());
-
-  // نسخة من Firebase Auth
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth;
+  final GoogleSignIn _googleSignIn;
+  AuthCubit(this._auth, this._googleSignIn) : super(AuthInitial());
 
   // 1. دالة تسجيل الدخول (Sign In)
   Future<void> signIn({required String email, required String password}) async {
@@ -70,7 +71,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   // google_sign_in v7+ uses a singleton that must be initialized once.
-  final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
+
   bool _googleSignInInitialized = false;
 
   Future<void> _ensureGoogleSignInInitialized() async {
