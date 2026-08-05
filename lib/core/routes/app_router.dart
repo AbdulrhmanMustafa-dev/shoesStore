@@ -11,14 +11,16 @@ import 'package:kicksvibe/features/auth/presentation/pages/recovery_password_scr
 import 'package:kicksvibe/features/auth/presentation/pages/register_screen.dart';
 import 'package:kicksvibe/features/product_details/presentation/cubit/product_details_cubit.dart';
 import 'package:kicksvibe/features/product_details/presentation/pages/ProductDetailsScreen.dart';
+
 import 'app_routes.dart';
+
 class AppRouter {
   Route? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case AppRoutes.splash:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
       case AppRoutes.onboarding:
-        return MaterialPageRoute(builder: (_) =>  OnboardingScreen());
+        return MaterialPageRoute(builder: (_) => const OnboardingScreen());
 
       case AppRoutes.login:
         return MaterialPageRoute(builder: (_) => LoginScreen());
@@ -39,7 +41,10 @@ class AppRouter {
         );
        // تأكد من عمل استيراد لملفات الـ Cubit والـ injection
       case AppRoutes.productDetails:
-        final product = settings.arguments as ProductModel;
+        final product = settings.arguments;
+        if (product is! ProductModel) {
+          return _errorRoute('Product details requires a valid product.');
+        }
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) =>
@@ -48,12 +53,13 @@ class AppRouter {
           ),
         );
       default:
-        // شاشة افتراضية لو المسار غير موجود
-        return MaterialPageRoute(
-          builder: (_) => Scaffold(
-            body: Center(child: Text('No route defined for ${settings.name}')),
-          ),
-        );
+        return _errorRoute('No route defined for ${settings.name}');
     }
+  }
+
+  MaterialPageRoute<void> _errorRoute(String message) {
+    return MaterialPageRoute(
+      builder: (_) => Scaffold(body: Center(child: Text(message))),
+    );
   }
 }

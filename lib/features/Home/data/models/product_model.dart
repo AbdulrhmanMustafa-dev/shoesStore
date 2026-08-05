@@ -2,17 +2,19 @@ class ProductModel {
   final String id;
   final String name;
   final double price;
-  final List<String> images;
+  final List<String> images; // صور المعرض والألوان (Gallery)
+  final List<String> rotationImages; // صور الـ 3D المتسلسلة (جديد)
   final String category;
   final bool isBestSeller;
-  final String description; // جديد
-  final List<int> sizes; // جديد
+  final String description;
+  final List<int> sizes;
 
   ProductModel({
     required this.id,
     required this.name,
     required this.price,
     required this.images,
+    required this.rotationImages,
     required this.category,
     required this.isBestSeller,
     required this.description,
@@ -25,13 +27,13 @@ class ProductModel {
       name: json['name'] ?? '',
       price: (json['price'] ?? 0.0).toDouble(),
       images: List<String>.from(json['images'] ?? []),
+      rotationImages: List<String>.from(
+        json['rotationImages'] ?? [],
+      ), // قراءة الداتا الجديدة
       category: json['category'] ?? '',
       isBestSeller: json['isBestSeller'] ?? false,
-      description:
-          json['description'] ?? 'No description available.', // قيمة افتراضية
-      sizes: List<int>.from(
-        json['sizes'] ?? [38, 39, 40, 41, 42],
-      ), // قيمة افتراضية
+      description: json['description'] ?? 'No description available.',
+      sizes: List<int>.from(json['sizes'] ?? [38, 39, 40, 41, 42]),
     );
   }
 }

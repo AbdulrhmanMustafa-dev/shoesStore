@@ -19,7 +19,7 @@ class CacheHelper {
     return setBool('get_started_pressed', value);
   }
 
-  static Future<bool> getGetStartedPressed({bool defaultValue = true}) async {
+  static Future<bool> getGetStartedPressed({bool defaultValue = false}) async {
     return getBool('get_started_pressed', defaultValue: defaultValue);
   }
 

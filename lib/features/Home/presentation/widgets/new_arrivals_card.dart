@@ -64,13 +64,17 @@ class NewArrivalsCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Image.network(
-                      product.images.first,
+                    SizedBox(
                       width: 120,
                       height: 90,
-                      fit: BoxFit.contain,
-                      errorBuilder: (_, __, ___) =>
-                          const Icon(Icons.broken_image, size: 50),
+                      child: product.images.isEmpty
+                          ? const Icon(Icons.broken_image, size: 50)
+                          : Image.network(
+                              product.images.first,
+                              fit: BoxFit.contain,
+                              errorBuilder: (_, __, ___) =>
+                                  const Icon(Icons.broken_image, size: 50),
+                            ),
                     ),
                   ],
                 ),

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kicksvibe/core/routes/app_routes.dart';
 import 'package:kicksvibe/core/utils/CacheHelper.dart';
@@ -17,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _routeUser() async {
-    final bool isSignedIn = await CacheHelper.getIsSignedIn();
+    final isSignedIn = FirebaseAuth.instance.currentUser != null;
     final bool getStartedPressed = await CacheHelper.getGetStartedPressed();
 
     if (!mounted) return;

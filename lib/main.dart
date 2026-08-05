@@ -18,8 +18,13 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final AppRouter appRouter;
+  final String initialRoute;
 
-  const MyApp({super.key, required this.appRouter});
+  const MyApp({
+    super.key,
+    required this.appRouter,
+    this.initialRoute = AppRoutes.splash,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +35,7 @@ class MyApp extends StatelessWidget {
         title: 'KicksVibe',
         theme: ThemeData(primarySwatch: Colors.blue),
         onGenerateRoute: appRouter.generateRoute,
-        initialRoute: AppRoutes.splash,
+        initialRoute: initialRoute,
       ),
     );
   }

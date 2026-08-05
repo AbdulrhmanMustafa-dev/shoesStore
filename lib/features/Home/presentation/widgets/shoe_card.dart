@@ -89,14 +89,14 @@ class _ShoeCardState extends State<ShoeCard> {
                     },
                     itemCount: widget.product.images.isNotEmpty ? widget.product.images.length : 1,
                     itemBuilder: (context, index) {
-                      final imageUrl = widget.product.images.isNotEmpty 
-                          ? widget.product.images[index] 
-                          : ''; // حماية في حالة عدم وجود صور
-                          
+                      if (widget.product.images.isEmpty) {
+                        return const Icon(Icons.broken_image);
+                      }
                       return Image.network(
-                        imageUrl,
+                        widget.product.images[index],
                         fit: BoxFit.contain,
-                        errorBuilder: (_, __, ___) => const Icon(Icons.broken_image),
+                        errorBuilder: (_, __, ___) =>
+                            const Icon(Icons.broken_image),
                       );
                     },
                   ),

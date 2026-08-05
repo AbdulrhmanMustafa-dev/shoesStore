@@ -6,7 +6,7 @@ import 'package:kicksvibe/features/Onboarding/presentation/widgets/onboarding_ba
 import '../cubit/onboarding_cubit.dart';
 
 class OnboardingScreen extends StatefulWidget {
-  OnboardingScreen({super.key});
+  const OnboardingScreen({super.key});
 
   @override
   State<OnboardingScreen> createState() => _OnboardingScreenState();
@@ -108,7 +108,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ElevatedButton(
                           onPressed: () {
                             if (currentIndex == screens.length - 1) {
-                              print("Navigate to Login/Home");
                               context
                                   .read<OnboardingCubit>()
                                   .finishOnboarding();
