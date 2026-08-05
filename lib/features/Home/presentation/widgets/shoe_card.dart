@@ -1,10 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kicksvibe/core/routes/app_routes.dart';
 import 'package:kicksvibe/features/Home/data/models/product_model.dart';
-import 'package:kicksvibe/features/Home/presentation/cubit/home_cubit.dart';
 
 class ShoeCard extends StatefulWidget {
   final ProductModel product;

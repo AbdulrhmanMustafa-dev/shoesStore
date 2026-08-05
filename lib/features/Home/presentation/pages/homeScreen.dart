@@ -7,7 +7,6 @@ import 'package:kicksvibe/features/Home/presentation/widgets/new_arrivals_card.d
 import 'package:kicksvibe/features/Home/presentation/widgets/popular_shoes_list.dart';
 import 'package:kicksvibe/features/Home/presentation/widgets/search_bar_widget.dart';
 import 'package:kicksvibe/features/Home/presentation/widgets/section_title.dart';
-import 'package:kicksvibe/features/Home/presentation/widgets/shoe_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
