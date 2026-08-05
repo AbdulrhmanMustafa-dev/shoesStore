@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kicksvibe/core/pages/splash_screen.dart';
+import 'package:kicksvibe/features/Home/presentation/cubit/home_cubit.dart';
 import 'package:kicksvibe/features/Home/presentation/pages/homeScreen.dart';
 import 'package:kicksvibe/features/Onboarding/presentation/pages/OnboardingScreen.dart';
 import 'package:kicksvibe/features/auth/presentation/pages/login_screen.dart';
@@ -24,8 +26,13 @@ class AppRouter {
       case AppRoutes.recoveryPassword:
         return MaterialPageRoute(builder: (_) => RecoveryPasswordScreen());
       case AppRoutes.home:
-        return MaterialPageRoute(builder: (_) => HomeScreen());
-
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) =>
+                HomeCubit()..fetchProducts(), // جلب البيانات فور بناء الكيوبت
+            child: const HomeScreen(),
+          ),
+        );
       default:
         // شاشة افتراضية لو المسار غير موجود
         return MaterialPageRoute(

@@ -41,6 +41,7 @@ dependencies:
   flutter_bloc: ^9.1.1
   firebase_core: ^4.12.1
   google_sign_in: ^7.2.0
+  cloud_firestore: ^6.7.1
 
 dev_dependencies:
   feature_generator: ^2.4.1
