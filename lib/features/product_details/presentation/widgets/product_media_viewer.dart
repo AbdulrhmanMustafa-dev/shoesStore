@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kicksvibe/core/widgets/cached_product_image.dart';
 import 'package:kicksvibe/features/Home/data/models/product_model.dart';
 import 'package:kicksvibe/features/product_details/presentation/cubit/product_details_cubit.dart';
 
@@ -28,7 +30,9 @@ class _ProductMediaViewerState extends State<ProductMediaViewer> {
       ...widget.product.rotationImages,
       ...widget.product.images,
     ]) {
-      if (url.isNotEmpty) precacheImage(NetworkImage(url), context);
+      if (url.isNotEmpty) {
+        precacheImage(CachedNetworkImageProvider(url), context);
+      }
     }
   }
 
@@ -109,13 +113,11 @@ class _ThreeDimensionalView extends StatelessWidget {
       builder: (context, state) => GestureDetector(
         onPanUpdate: onDrag,
         child: Center(
-          child: Image.network(
-            product.rotationImages[state.selectedImageIndex],
+          child: CachedProductImage(
+            imageUrl: product.rotationImages[state.selectedImageIndex],
             height: 250,
             fit: BoxFit.contain,
-            gaplessPlayback: true,
-            errorBuilder: (context, error, stackTrace) =>
-                const Icon(Icons.broken_image, size: 100, color: Colors.grey),
+            errorIconSize: 100,
           ),
         ),
       ),
@@ -143,12 +145,11 @@ class _RegularImagePageView extends StatelessWidget {
         has3D ? index + 1 : index,
       ),
       itemBuilder: (context, index) => Center(
-        child: Image.network(
-          product.images[index],
+        child: CachedProductImage(
+          imageUrl: product.images[index],
           height: 250,
           fit: BoxFit.contain,
-          errorBuilder: (context, error, stackTrace) =>
-              const Icon(Icons.broken_image, size: 100, color: Colors.grey),
+          errorIconSize: 100,
         ),
       ),
     );

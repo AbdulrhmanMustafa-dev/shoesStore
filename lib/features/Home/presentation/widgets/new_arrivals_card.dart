@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kicksvibe/core/widgets/cached_product_image.dart';
 import 'package:kicksvibe/features/Home/presentation/cubit/home_cubit.dart';
 
 class NewArrivalsCard extends StatelessWidget {
@@ -69,11 +70,10 @@ class NewArrivalsCard extends StatelessWidget {
                       height: 90,
                       child: product.images.isEmpty
                           ? const Icon(Icons.broken_image, size: 50)
-                          : Image.network(
-                              product.images.first,
+                          : CachedProductImage(
+                              imageUrl: product.images.first,
                               fit: BoxFit.contain,
-                              errorBuilder: (context, error, stackTrace) =>
-                                  const Icon(Icons.broken_image, size: 50),
+                              errorIconSize: 50,
                             ),
                     ),
                   ],

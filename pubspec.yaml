@@ -46,6 +46,7 @@ dependencies:
   injectable: ^2.7.1+4
   hive_ce: ^2.19.3
   hive_ce_flutter: ^2.3.4
+  cached_network_image: ^3.4.1
 
 dev_dependencies:
   feature_generator: ^2.4.1

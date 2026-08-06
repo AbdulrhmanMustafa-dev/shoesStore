@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kicksvibe/core/routes/app_routes.dart';
+import 'package:kicksvibe/core/widgets/cached_product_image.dart';
 import 'package:kicksvibe/features/Home/data/models/product_model.dart';
 import 'package:kicksvibe/features/favourite/presentation/cubit/favourite_cubit.dart';
 
@@ -93,11 +94,9 @@ class _ShoeCardState extends State<ShoeCard> {
                       if (widget.product.images.isEmpty) {
                         return const Icon(Icons.broken_image);
                       }
-                      return Image.network(
-                        widget.product.images[index],
+                      return CachedProductImage(
+                        imageUrl: widget.product.images[index],
                         fit: BoxFit.contain,
-                        errorBuilder: (context, error, stackTrace) =>
-                            const Icon(Icons.broken_image),
                       );
                     },
                   ),

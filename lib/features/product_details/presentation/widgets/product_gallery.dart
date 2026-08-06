@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kicksvibe/core/widgets/cached_product_image.dart';
 import 'package:kicksvibe/features/Home/data/models/product_model.dart';
 import 'package:kicksvibe/features/product_details/presentation/cubit/product_details_cubit.dart';
 
@@ -55,7 +56,7 @@ class ProductGallery extends StatelessWidget {
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    Image.network(imageUrl, fit: BoxFit.contain),
+                    CachedProductImage(imageUrl: imageUrl, fit: BoxFit.contain),
                     if (is3DItem)
                       Container(
                         padding: const EdgeInsets.all(4),
