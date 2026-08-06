@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kicksvibe/core/routes/app_routes.dart';
-import 'package:kicksvibe/features/Onboarding/presentation/models/OnboardingModel.dart';
+import 'package:kicksvibe/features/Onboarding/presentation/models/onboarding_model.dart';
 import 'package:kicksvibe/features/Onboarding/presentation/widgets/onboarding_background.dart';
 import '../cubit/onboarding_cubit.dart';
 
@@ -65,15 +65,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const SizedBox(height: 40),
+                              const SizedBox(height: 24),
                               Center(
                                 child: Image.asset(
                                   screens[index].image,
-                                  height: 300,
+                                  height: 220,
                                   fit: BoxFit.contain,
                                 ),
                               ),
-                              const SizedBox(height: 60),
+                              const SizedBox(height: 24),
                               Text(
                                 screens[index].title,
                                 style: const TextStyle(
@@ -106,11 +106,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           ),
                         ),
                         ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             if (currentIndex == screens.length - 1) {
-                              context
+                              await context
                                   .read<OnboardingCubit>()
                                   .finishOnboarding();
+                              if (!context.mounted) return;
                               Navigator.pushReplacementNamed(
                                 context,
                                 AppRoutes.login,
@@ -154,11 +155,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-@override
+  @override
   void dispose() {
     _pageController.dispose();
     super.dispose();
-  } 
+  }
 
   Widget _buildDot(int index, int currentIndex) {
     return AnimatedContainer(

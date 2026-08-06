@@ -24,7 +24,10 @@ class _ProductMediaViewerState extends State<ProductMediaViewer> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    for (final url in [...widget.product.rotationImages, ...widget.product.images]) {
+    for (final url in [
+      ...widget.product.rotationImages,
+      ...widget.product.images,
+    ]) {
       if (url.isNotEmpty) precacheImage(NetworkImage(url), context);
     }
   }
@@ -46,7 +49,11 @@ class _ProductMediaViewerState extends State<ProductMediaViewer> {
                       onDrag: _handleDrag,
                     )
                   : widget.product.images.isEmpty
-                  ? const Icon(Icons.broken_image, size: 100, color: Colors.grey)
+                  ? const Icon(
+                      Icons.broken_image,
+                      size: 100,
+                      color: Colors.grey,
+                    )
                   : _RegularImagePageView(
                       product: widget.product,
                       pageController: widget.pageController,
@@ -71,18 +78,21 @@ class _ProductMediaViewerState extends State<ProductMediaViewer> {
     if (widget.product.rotationImages.isEmpty) return;
     _dragPosition += details.delta.dx;
     final imageCount = widget.product.rotationImages.length;
-    final currentIndex = context.read<ProductDetailsCubit>().state.selectedImageIndex;
+    final currentIndex = context
+        .read<ProductDetailsCubit>()
+        .state
+        .selectedImageIndex;
 
     if (_dragPosition > _dragSensitivity) {
       _dragPosition = 0;
       context.read<ProductDetailsCubit>().changeImage(
-            (currentIndex - 1 + imageCount) % imageCount,
-          );
+        (currentIndex - 1 + imageCount) % imageCount,
+      );
     } else if (_dragPosition < -_dragSensitivity) {
       _dragPosition = 0;
       context.read<ProductDetailsCubit>().changeImage(
-            (currentIndex + 1) % imageCount,
-          );
+        (currentIndex + 1) % imageCount,
+      );
     }
   }
 }
@@ -104,11 +114,8 @@ class _ThreeDimensionalView extends StatelessWidget {
             height: 250,
             fit: BoxFit.contain,
             gaplessPlayback: true,
-            errorBuilder: (_, _, _) => const Icon(
-              Icons.broken_image,
-              size: 100,
-              color: Colors.grey,
-            ),
+            errorBuilder: (context, error, stackTrace) =>
+                const Icon(Icons.broken_image, size: 100, color: Colors.grey),
           ),
         ),
       ),
@@ -132,19 +139,16 @@ class _RegularImagePageView extends StatelessWidget {
     return PageView.builder(
       controller: pageController,
       itemCount: product.images.length,
-      onPageChanged: (index) => context
-          .read<ProductDetailsCubit>()
-          .changeColor(has3D ? index + 1 : index),
+      onPageChanged: (index) => context.read<ProductDetailsCubit>().changeColor(
+        has3D ? index + 1 : index,
+      ),
       itemBuilder: (context, index) => Center(
         child: Image.network(
           product.images[index],
           height: 250,
           fit: BoxFit.contain,
-          errorBuilder: (_, _, _) => const Icon(
-            Icons.broken_image,
-            size: 100,
-            color: Colors.grey,
-          ),
+          errorBuilder: (context, error, stackTrace) =>
+              const Icon(Icons.broken_image, size: 100, color: Colors.grey),
         ),
       ),
     );
@@ -162,7 +166,8 @@ class _CurvedRotationSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final progress = selectedImageIndex / (imageCount - 1 == 0 ? 1 : imageCount - 1);
+    final progress =
+        selectedImageIndex / (imageCount - 1 == 0 ? 1 : imageCount - 1);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 60),
       child: SizedBox(
@@ -176,7 +181,10 @@ class _CurvedRotationSlider extends StatelessWidget {
             return Stack(
               clipBehavior: Clip.none,
               children: [
-                CustomPaint(size: Size(width, height), painter: _CurvedLinePainter()),
+                CustomPaint(
+                  size: Size(width, height),
+                  painter: _CurvedLinePainter(),
+                ),
                 Positioned(
                   left: thumbX - 20,
                   top: thumbY - 12,
@@ -188,7 +196,7 @@ class _CurvedRotationSlider extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xFF5A9AE5).withOpacity(0.4),
+                          color: const Color(0xFF5A9AE5).withAlpha(102),
                           blurRadius: 4,
                           offset: const Offset(0, 2),
                         ),
@@ -197,8 +205,16 @@ class _CurvedRotationSlider extends StatelessWidget {
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.arrow_left_rounded, color: Colors.white, size: 18),
-                        Icon(Icons.arrow_right_rounded, color: Colors.white, size: 18),
+                        Icon(
+                          Icons.arrow_left_rounded,
+                          color: Colors.white,
+                          size: 18,
+                        ),
+                        Icon(
+                          Icons.arrow_right_rounded,
+                          color: Colors.white,
+                          size: 18,
+                        ),
                       ],
                     ),
                   ),
@@ -216,7 +232,7 @@ class _CurvedLinePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = const Color(0xFF5A9AE5).withOpacity(0.5)
+      ..color = const Color(0xFF5A9AE5).withAlpha(128)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.5;
     final path = Path()

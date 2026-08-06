@@ -12,10 +12,12 @@ class PopularShoesList extends StatelessWidget {
       height: 240,
       child: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) {
-          if (state is HomeLoading)
+          if (state is HomeLoading) {
             return const Center(child: CircularProgressIndicator());
-          if (state is HomeError)
+          }
+          if (state is HomeError) {
             return Center(child: Text(state.errorMessage));
+          }
 
           if (state is HomeLoaded) {
             if (state.popularProducts.isEmpty) {

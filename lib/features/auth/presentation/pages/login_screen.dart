@@ -1,15 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kicksvibe/core/routes/app_routes.dart';
-import 'package:kicksvibe/core/widgets/CustomBackButton.dart';
-import 'package:kicksvibe/core/widgets/CustomTextField.dart';
+import 'package:kicksvibe/core/widgets/custom_back_button.dart';
+import 'package:kicksvibe/core/widgets/custom_text_field.dart';
 import 'package:kicksvibe/features/auth/presentation/cubit/auth_cubit.dart';
 
-class LoginScreen extends StatelessWidget {
-    LoginScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +90,6 @@ class LoginScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
 
-            
               BlocConsumer<AuthCubit, AuthState>(
                 listener: (context, state) {
                   if (state is AuthSuccess) {
@@ -93,13 +104,15 @@ class LoginScreen extends StatelessWidget {
                   return SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {
-                        // الـ onPressed وظيفته فقط إرسال الحدث (Event) للكيوبت
-                        context.read<AuthCubit>().signIn(
-                          email: emailController.text,
-                          password: passwordController.text,
-                        );
-                      },
+                      onPressed: state is AuthLoading
+                          ? null
+                          : () {
+                              // الـ onPressed وظيفته فقط إرسال الحدث (Event) للكيوبت
+                              context.read<AuthCubit>().signIn(
+                                email: emailController.text,
+                                password: passwordController.text,
+                              );
+                            },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF5A9AE5),
                         padding: const EdgeInsets.symmetric(vertical: 16),
@@ -132,7 +145,6 @@ class LoginScreen extends StatelessWidget {
                 child: ElevatedButton.icon(
                   onPressed: () {
                     context.read<AuthCubit>().signInWithGoogle();
-                    
                   },
                   icon: Image.network(
                     'https://cdn-icons-png.flaticon.com/512/300/300221.png', // رابط PNG شغال

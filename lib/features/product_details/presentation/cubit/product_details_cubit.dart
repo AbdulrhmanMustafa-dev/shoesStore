@@ -5,38 +5,22 @@ part 'product_details_state.dart';
 
 @injectable
 class ProductDetailsCubit extends Cubit<ProductDetailsState> {
-  ProductDetailsCubit() : super(ProductDetailsState());
+  ProductDetailsCubit() : super(const ProductDetailsState());
 
   // لتحديث دوران الـ 3D
   void changeImage(int index) {
-    emit(
-      ProductDetailsState(
-        selectedImageIndex: index,
-        selectedColorIndex: state.selectedColorIndex,
-        selectedSizeIndex: state.selectedSizeIndex,
-      ),
-    );
+    if (index == state.selectedImageIndex) return;
+    emit(state.copyWith(selectedImageIndex: index));
   }
 
   // لتحديث اختيار اللون من الـ Gallery
   void changeColor(int index) {
-    emit(
-      ProductDetailsState(
-        selectedImageIndex: state
-            .selectedImageIndex, // يمكنك تصفيرها لـ 0 لو حابب الـ 3D يرجع للأول مع تغيير اللون
-        selectedColorIndex: index,
-        selectedSizeIndex: state.selectedSizeIndex,
-      ),
-    );
+    if (index == state.selectedColorIndex) return;
+    emit(state.copyWith(selectedColorIndex: index));
   }
 
   void changeSize(int index) {
-    emit(
-      ProductDetailsState(
-        selectedImageIndex: state.selectedImageIndex,
-        selectedColorIndex: state.selectedColorIndex,
-        selectedSizeIndex: index,
-      ),
-    );
+    if (index == state.selectedSizeIndex) return;
+    emit(state.copyWith(selectedSizeIndex: index));
   }
 }

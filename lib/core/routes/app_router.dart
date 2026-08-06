@@ -4,13 +4,14 @@ import 'package:kicksvibe/core/di/injection.dart';
 import 'package:kicksvibe/core/pages/splash_screen.dart';
 import 'package:kicksvibe/features/Home/data/models/product_model.dart';
 import 'package:kicksvibe/features/Home/presentation/cubit/home_cubit.dart';
-import 'package:kicksvibe/features/Home/presentation/pages/homeScreen.dart';
-import 'package:kicksvibe/features/Onboarding/presentation/pages/OnboardingScreen.dart';
+import 'package:kicksvibe/features/Home/presentation/pages/home_screen.dart';
+import 'package:kicksvibe/features/Onboarding/presentation/pages/onboarding_screen.dart';
 import 'package:kicksvibe/features/auth/presentation/pages/login_screen.dart';
 import 'package:kicksvibe/features/auth/presentation/pages/recovery_password_screen.dart';
 import 'package:kicksvibe/features/auth/presentation/pages/register_screen.dart';
+import 'package:kicksvibe/features/favourite/presentation/pages/favorite_screen.dart';
 import 'package:kicksvibe/features/product_details/presentation/cubit/product_details_cubit.dart';
-import 'package:kicksvibe/features/product_details/presentation/pages/ProductDetailsScreen.dart';
+import 'package:kicksvibe/features/product_details/presentation/pages/product_details_screen.dart';
 
 import 'app_routes.dart';
 
@@ -34,12 +35,12 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) =>
-              getIt<HomeCubit>()
+                getIt<HomeCubit>()
                   ..fetchHomeData(), // جلب البيانات فور بناء الكيوبت
             child: const HomeScreen(),
           ),
         );
-       // تأكد من عمل استيراد لملفات الـ Cubit والـ injection
+      // تأكد من عمل استيراد لملفات الـ Cubit والـ injection
       case AppRoutes.productDetails:
         final product = settings.arguments;
         if (product is! ProductModel) {
@@ -52,6 +53,9 @@ class AppRouter {
             child: ProductDetailsScreen(product: product),
           ),
         );
+      // لا تنسَ عمل Import للشاشة
+      case AppRoutes.favorite:
+        return MaterialPageRoute(builder: (_) => const FavoriteScreen());
       default:
         return _errorRoute('No route defined for ${settings.name}');
     }

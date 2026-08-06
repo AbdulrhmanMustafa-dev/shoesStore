@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kicksvibe/core/widgets/CustomBackButton.dart';
+import 'package:kicksvibe/core/widgets/custom_back_button.dart';
 
 class ProductDetailsHeader extends StatelessWidget {
   const ProductDetailsHeader({super.key});

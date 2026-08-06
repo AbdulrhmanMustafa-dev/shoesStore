@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kicksvibe/core/utils/CacheHelper.dart';
+import 'package:kicksvibe/core/utils/cache_helper.dart';
 
 class OnboardingCubit extends Cubit<int> {
   OnboardingCubit() : super(0);

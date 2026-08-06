@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kicksvibe/core/routes/app_routes.dart';
 import 'package:kicksvibe/features/Home/data/models/product_model.dart';
+import 'package:kicksvibe/features/favourite/presentation/cubit/favourite_cubit.dart';
 
 class ShoeCard extends StatefulWidget {
   final ProductModel product;
@@ -25,14 +27,14 @@ class _ShoeCardState extends State<ShoeCard> {
   // 💡 نصيحة سينير: دالة تقليب الصور تلقائياً كل 3 ثواني
   void _startAutoScroll() {
     if (widget.product.images.isEmpty) return;
-    
+
     _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
       if (_currentPage < widget.product.images.length - 1) {
         _currentPage++;
       } else {
         _currentPage = 0; // ارجع لأول صورة لو وصلنا للآخر
       }
-      
+
       if (_pageController.hasClients) {
         _pageController.animateToPage(
           _currentPage,
@@ -84,7 +86,9 @@ class _ShoeCardState extends State<ShoeCard> {
                         _currentPage = index;
                       });
                     },
-                    itemCount: widget.product.images.isNotEmpty ? widget.product.images.length : 1,
+                    itemCount: widget.product.images.isNotEmpty
+                        ? widget.product.images.length
+                        : 1,
                     itemBuilder: (context, index) {
                       if (widget.product.images.isEmpty) {
                         return const Icon(Icons.broken_image);
@@ -92,7 +96,7 @@ class _ShoeCardState extends State<ShoeCard> {
                       return Image.network(
                         widget.product.images[index],
                         fit: BoxFit.contain,
-                        errorBuilder: (_, __, ___) =>
+                        errorBuilder: (context, error, stackTrace) =>
                             const Icon(Icons.broken_image),
                       );
                     },
@@ -108,30 +112,76 @@ class _ShoeCardState extends State<ShoeCard> {
                           width: _currentPage == index ? 8 : 4,
                           height: 4,
                           decoration: BoxDecoration(
-                            color: _currentPage == index ? const Color(0xFF5A9AE5) : Colors.grey.shade300,
+                            color: _currentPage == index
+                                ? const Color(0xFF5A9AE5)
+                                : Colors.grey.shade300,
                             borderRadius: BorderRadius.circular(4),
                           ),
                         ),
                       ),
                     ),
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: BlocSelector<FavoriteCubit, FavoriteState, bool>(
+                      selector: (state) => state.favoriteProducts.any(
+                        (product) => product.id == widget.product.id,
+                      ),
+                      builder: (context, isFavorite) => IconButton(
+                        tooltip: isFavorite
+                            ? 'Remove from favourites'
+                            : 'Add to favourites',
+                        onPressed: () => context
+                            .read<FavoriteCubit>()
+                            .toggleFavorite(widget.product),
+                        icon: Icon(
+                          isFavorite ? Icons.favorite : Icons.favorite_border,
+                          color: isFavorite
+                              ? Colors.redAccent
+                              : const Color(0xFF1E2832),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
             const SizedBox(height: 8),
             if (widget.product.isBestSeller)
-              const Text('BEST SELLER', style: TextStyle(color: Color(0xFF5A9AE5), fontSize: 10, fontWeight: FontWeight.bold)),
+              const Text(
+                'BEST SELLER',
+                style: TextStyle(
+                  color: Color(0xFF5A9AE5),
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             const SizedBox(height: 4),
-            Text(widget.product.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold), maxLines: 1, overflow: TextOverflow.ellipsis),
+            Text(
+              widget.product.name,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
             const SizedBox(height: 4),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('\$${widget.product.price}', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
+                Text(
+                  '\$${widget.product.price}',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: const BoxDecoration(
                     color: Color(0xFF5A9AE5),
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(12), bottomRight: Radius.circular(12)),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(12),
+                      bottomRight: Radius.circular(12),
+                    ),
                   ),
                   child: const Icon(Icons.add, color: Colors.white, size: 16),
                 ),

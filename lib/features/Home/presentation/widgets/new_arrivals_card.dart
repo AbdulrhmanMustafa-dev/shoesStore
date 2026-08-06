@@ -72,7 +72,7 @@ class NewArrivalsCard extends StatelessWidget {
                           : Image.network(
                               product.images.first,
                               fit: BoxFit.contain,
-                              errorBuilder: (_, __, ___) =>
+                              errorBuilder: (context, error, stackTrace) =>
                                   const Icon(Icons.broken_image, size: 50),
                             ),
                     ),

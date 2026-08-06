@@ -17,6 +17,8 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'package:kicksvibe/core/di/app_module.dart' as _i171;
 import 'package:kicksvibe/features/auth/presentation/cubit/auth_cubit.dart'
     as _i437;
+import 'package:kicksvibe/features/favourite/presentation/cubit/favourite_cubit.dart'
+    as _i514;
 import 'package:kicksvibe/features/Home/presentation/cubit/home_cubit.dart'
     as _i41;
 import 'package:kicksvibe/features/product_details/presentation/cubit/product_details_cubit.dart'
@@ -34,6 +36,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i974.FirebaseFirestore>(() => appModule.firestore);
     gh.lazySingleton<_i59.FirebaseAuth>(() => appModule.firebaseAuth);
     gh.lazySingleton<_i116.GoogleSignIn>(() => appModule.googleSignIn);
+    gh.lazySingleton<_i514.FavoriteCubit>(
+      () => _i514.FavoriteCubit(
+        gh<_i59.FirebaseAuth>(),
+        gh<_i974.FirebaseFirestore>(),
+      ),
+    );
     gh.factory<_i437.AuthCubit>(
       () => _i437.AuthCubit(gh<_i59.FirebaseAuth>(), gh<_i116.GoogleSignIn>()),
     );

@@ -1,15 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kicksvibe/core/routes/app_routes.dart';
-import 'package:kicksvibe/core/widgets/CustomBackButton.dart';
-import 'package:kicksvibe/core/widgets/CustomTextField.dart';
+import 'package:kicksvibe/core/widgets/custom_back_button.dart';
+import 'package:kicksvibe/core/widgets/custom_text_field.dart';
 import 'package:kicksvibe/features/auth/presentation/cubit/auth_cubit.dart';
 
-class RegisterScreen extends StatelessWidget {
-  RegisterScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
+
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,30 +85,24 @@ class RegisterScreen extends StatelessWidget {
                   if (state is AuthSuccess) {
                     Navigator.pushReplacementNamed(context, AppRoutes.home);
                   } else if (state is AuthFailure) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(state.errorMessage)),
-                    );
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text(state.errorMessage)));
                   }
                 },
                 builder: (context, state) {
                   return SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () async {
-                        context.read<AuthCubit>().signUp(
-                          name: nameController.text,
-                          email: emailController.text,
-                          password: passwordController.text,
-                        );
-                        await Future.delayed(Duration.zero);
-                        if (state is AuthSuccess) {
-                          Navigator.pushReplacementNamed(context, AppRoutes.home);
-                        }else if (state is AuthFailure) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(state.errorMessage)),
-                          );
-                        }
-                      },
+                      onPressed: state is AuthLoading
+                          ? null
+                          : () {
+                              context.read<AuthCubit>().signUp(
+                                name: nameController.text,
+                                email: emailController.text,
+                                password: passwordController.text,
+                              );
+                            },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF5A9AE5),
                         padding: const EdgeInsets.symmetric(vertical: 16),
@@ -103,17 +111,19 @@ class RegisterScreen extends StatelessWidget {
                         ),
                         elevation: 0,
                       ),
-                      child: const Text(
-                        'Sign Up', 
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                      child: state is AuthLoading
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : const Text(
+                              'Sign Up',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                     ),
                   );
-                }
+                },
               ),
               const SizedBox(height: 16),
 

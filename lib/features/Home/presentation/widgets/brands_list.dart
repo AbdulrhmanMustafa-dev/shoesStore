@@ -9,17 +9,19 @@ class BrandsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
+        if (state is! HomeLoaded || state.brands.isEmpty) {
+          return const SizedBox();
+        }
         final cubit = context.read<HomeCubit>();
-        if (cubit.brands.isEmpty) return const SizedBox();
 
         return SizedBox(
           height: 45,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: cubit.brands.length,
+            itemCount: state.brands.length,
             itemBuilder: (context, index) {
-              final brand = cubit.brands[index];
-              final isSelected = cubit.selectedBrand == brand.title;
+              final brand = state.brands[index];
+              final isSelected = state.selectedBrand == brand.title;
 
               return GestureDetector(
                 onTap: () => cubit.changeBrand(brand.title),
@@ -47,13 +49,14 @@ class BrandsList extends StatelessWidget {
                               width: 24,
                               height: 24,
                               // تم حذف خاصية color لكي تظهر الصورة بألوانها الطبيعية
-                              errorBuilder: (_, __, ___) => Icon(
-                                Icons.sports_baseball,
-                                color: isSelected
-                                    ? Colors.white
-                                    : Colors.black87,
-                                size: 24,
-                              ),
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Icon(
+                                    Icons.sports_baseball,
+                                    color: isSelected
+                                        ? Colors.white
+                                        : Colors.black87,
+                                    size: 24,
+                                  ),
                             ),
                       if (isSelected) ...[
                         const SizedBox(width: 8),

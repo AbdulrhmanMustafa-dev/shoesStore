@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kicksvibe/core/widgets/CustomBackButton.dart';
-import 'package:kicksvibe/core/widgets/CustomTextField.dart';
+import 'package:kicksvibe/core/widgets/custom_back_button.dart';
+import 'package:kicksvibe/core/widgets/custom_text_field.dart';
 import 'package:kicksvibe/features/auth/presentation/cubit/auth_cubit.dart';
 
-class RecoveryPasswordScreen extends StatelessWidget {
-  RecoveryPasswordScreen({super.key});
+class RecoveryPasswordScreen extends StatefulWidget {
+  const RecoveryPasswordScreen({super.key});
 
+  @override
+  State<RecoveryPasswordScreen> createState() => _RecoveryPasswordScreenState();
+}
+
+class _RecoveryPasswordScreenState extends State<RecoveryPasswordScreen> {
   final TextEditingController emailController =
       TextEditingController(); // إضافة الكنترولر
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +70,7 @@ class RecoveryPasswordScreen extends StatelessWidget {
                 // استخدام BlocConsumer لربط الـ Cubit
                 BlocConsumer<AuthCubit, AuthState>(
                   listener: (context, state) {
-                    if (state is AuthSuccess) {
+                    if (state is PasswordResetEmailSent) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text(
@@ -80,11 +91,13 @@ class RecoveryPasswordScreen extends StatelessWidget {
                     return SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {
-                          context.read<AuthCubit>().resetPassword(
-                            email: emailController.text,
-                          );
-                        },
+                        onPressed: state is AuthLoading
+                            ? null
+                            : () {
+                                context.read<AuthCubit>().resetPassword(
+                                  email: emailController.text,
+                                );
+                              },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF5A9AE5),
                           padding: const EdgeInsets.symmetric(vertical: 16),

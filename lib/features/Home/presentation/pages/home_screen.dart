@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kicksvibe/core/routes/app_routes.dart';
 import 'package:kicksvibe/features/Home/presentation/cubit/home_cubit.dart';
 import 'package:kicksvibe/features/Home/presentation/widgets/brands_list.dart';
 import 'package:kicksvibe/features/Home/presentation/widgets/home_header.dart';
@@ -45,7 +46,9 @@ class HomeScreen extends StatelessWidget {
                   ),
                   MaterialButton(
                     minWidth: 40,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, AppRoutes.favorite);
+                    },
                     child: const Icon(
                       Icons.favorite_border,
                       color: Colors.grey,

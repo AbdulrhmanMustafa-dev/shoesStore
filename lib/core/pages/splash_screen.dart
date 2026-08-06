@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kicksvibe/core/routes/app_routes.dart';
-import 'package:kicksvibe/core/utils/CacheHelper.dart';
+import 'package:kicksvibe/core/utils/cache_helper.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

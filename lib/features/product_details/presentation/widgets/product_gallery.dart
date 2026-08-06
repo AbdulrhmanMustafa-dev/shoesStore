@@ -60,7 +60,7 @@ class ProductGallery extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.all(4),
                         decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.4),
+                          color: Colors.black.withAlpha(102),
                           shape: BoxShape.circle,
                         ),
                         child: const Icon(

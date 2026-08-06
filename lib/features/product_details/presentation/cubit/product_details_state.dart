@@ -5,9 +5,21 @@ class ProductDetailsState {
   final int selectedColorIndex; // خاص بالـ Gallery
   final int selectedSizeIndex;
 
-  ProductDetailsState({
+  const ProductDetailsState({
     this.selectedImageIndex = 0,
     this.selectedColorIndex = 0,
     this.selectedSizeIndex = 0,
   });
+
+  ProductDetailsState copyWith({
+    int? selectedImageIndex,
+    int? selectedColorIndex,
+    int? selectedSizeIndex,
+  }) {
+    return ProductDetailsState(
+      selectedImageIndex: selectedImageIndex ?? this.selectedImageIndex,
+      selectedColorIndex: selectedColorIndex ?? this.selectedColorIndex,
+      selectedSizeIndex: selectedSizeIndex ?? this.selectedSizeIndex,
+    );
+  }
 }

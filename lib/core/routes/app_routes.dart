@@ -6,4 +6,5 @@ class AppRoutes {
   static const String recoveryPassword = '/recoveryPassword';
   static const String home = '/home';
   static const String productDetails = '/productDetails';
+  static const String favorite = '/favorite';
 }

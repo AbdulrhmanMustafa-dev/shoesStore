@@ -12,7 +12,7 @@ class SearchBarWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(30),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.05),
+            color: Colors.grey.withAlpha(13),
             blurRadius: 10,
             spreadRadius: 1,
           ),

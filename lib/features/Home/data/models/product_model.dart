@@ -1,12 +1,27 @@
+
+import 'package:hive_ce/hive_ce.dart';
+
+part 'product_model.g.dart';
+
+@HiveType(typeId: 0)
 class ProductModel {
+  @HiveField(0)
   final String id;
+  @HiveField(1)
   final String name;
+  @HiveField(2)
   final double price;
-  final List<String> images; // صور المعرض والألوان (Gallery)
-  final List<String> rotationImages; // صور الـ 3D المتسلسلة (جديد)
+  @HiveField(3)
+  final List<String> images;
+  @HiveField(4)
+  final List<String> rotationImages;
+  @HiveField(5)
   final String category;
+  @HiveField(6)
   final bool isBestSeller;
+  @HiveField(7)
   final String description;
+  @HiveField(8)
   final List<int> sizes;
 
   ProductModel({
@@ -20,7 +35,6 @@ class ProductModel {
     required this.description,
     required this.sizes,
   });
-
   factory ProductModel.fromJson(Map<String, dynamic> json, String documentId) {
     return ProductModel(
       id: documentId,
@@ -35,5 +49,18 @@ class ProductModel {
       description: json['description'] ?? 'No description available.',
       sizes: List<int>.from(json['sizes'] ?? [38, 39, 40, 41, 42]),
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'price': price,
+      'images': images,
+      'rotationImages': rotationImages,
+      'category': category,
+      'isBestSeller': isBestSeller,
+      'description': description,
+      'sizes': sizes,
+    };
   }
 }

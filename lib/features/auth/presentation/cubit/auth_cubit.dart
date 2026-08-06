@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
-import 'package:kicksvibe/core/utils/CacheHelper.dart';
+import 'package:kicksvibe/core/utils/cache_helper.dart';
 
 part 'auth_state.dart';
 
@@ -10,16 +10,19 @@ part 'auth_state.dart';
 class AuthCubit extends Cubit<AuthState> {
   final FirebaseAuth _auth;
   final GoogleSignIn _googleSignIn;
-  AuthCubit(this._auth, this._googleSignIn) : super(AuthInitial());
+  AuthCubit(this._auth, this._googleSignIn) : super(const AuthInitial());
 
   // 1. دالة تسجيل الدخول (Sign In)
   Future<void> signIn({required String email, required String password}) async {
-    emit(AuthLoading());
+    if (state is AuthLoading) return;
+    emit(const AuthLoading());
     try {
       final UserCredential userCredential = await _auth
-          .signInWithEmailAndPassword(email: email, password: password);
+          .signInWithEmailAndPassword(email: email.trim(), password: password);
+      final user = userCredential.user;
+      if (user == null) throw StateError('No user was returned after sign in.');
       await CacheHelper.saveIsSignedIn(value: true);
-      emit(AuthSuccess(userId: userCredential.user!.uid));
+      emit(AuthSuccess(userId: user.uid));
     } on FirebaseAuthException catch (e) {
       emit(AuthFailure(errorMessage: _getFirebaseErrorMessage(e)));
     } catch (e) {
@@ -35,16 +38,22 @@ class AuthCubit extends Cubit<AuthState> {
     required String password,
     required String name,
   }) async {
-    emit(AuthLoading());
+    if (state is AuthLoading) return;
+    emit(const AuthLoading());
     try {
       final UserCredential userCredential = await _auth
-          .createUserWithEmailAndPassword(email: email, password: password);
+          .createUserWithEmailAndPassword(
+            email: email.trim(),
+            password: password,
+          );
 
       // تحديث اسم المستخدم في بروفايل فايربيس
-      await userCredential.user?.updateDisplayName(name);
+      final user = userCredential.user;
+      if (user == null) throw StateError('No user was returned after sign up.');
+      await user.updateDisplayName(name.trim());
       await CacheHelper.saveIsSignedIn(value: true);
 
-      emit(AuthSuccess(userId: userCredential.user!.uid));
+      emit(AuthSuccess(userId: user.uid));
     } on FirebaseAuthException catch (e) {
       emit(AuthFailure(errorMessage: _getFirebaseErrorMessage(e)));
     } catch (e) {
@@ -56,11 +65,11 @@ class AuthCubit extends Cubit<AuthState> {
 
   // 3. دالة استعادة كلمة المرور (Reset Password)
   Future<void> resetPassword({required String email}) async {
-    emit(AuthLoading());
+    if (state is AuthLoading) return;
+    emit(const AuthLoading());
     try {
-      await _auth.sendPasswordResetEmail(email: email);
-      // بنبعت Success بس الـ UI هيتعامل معاها على إنها رسالة تأكيد مش دخول للتطبيق
-      emit(AuthSuccess(userId: ""));
+      await _auth.sendPasswordResetEmail(email: email.trim());
+      emit(const PasswordResetEmailSent());
     } on FirebaseAuthException catch (e) {
       emit(AuthFailure(errorMessage: _getFirebaseErrorMessage(e)));
     } catch (e) {
@@ -84,7 +93,8 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> signInWithGoogle() async {
-    emit(AuthLoading());
+    if (state is AuthLoading) return;
+    emit(const AuthLoading());
     try {
       await _ensureGoogleSignInInitialized();
 
@@ -113,7 +123,11 @@ class AuthCubit extends Cubit<AuthState> {
         credential,
       );
       await CacheHelper.saveIsSignedIn(value: true);
-      emit(AuthSuccess(userId: userCredential.user!.uid));
+      final user = userCredential.user;
+      if (user == null) {
+        throw StateError('No user was returned after Google sign in.');
+      }
+      emit(AuthSuccess(userId: user.uid));
     } on GoogleSignInException catch (e) {
       // Covers user cancellation and other Google Sign-In specific errors.
       if (e.code == GoogleSignInExceptionCode.canceled) {
