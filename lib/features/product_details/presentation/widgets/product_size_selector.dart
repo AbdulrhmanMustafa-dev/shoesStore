@@ -55,7 +55,8 @@ class ProductSizeSelector extends StatelessWidget {
           itemBuilder: (context, index) {
             final isSelected = state.selectedSizeIndex == index;
             return GestureDetector(
-              onTap: () => context.read<ProductDetailsCubit>().changeSize(index),
+              onTap: () =>
+                  context.read<ProductDetailsCubit>().changeSize(index),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
                 margin: const EdgeInsets.only(right: 12),

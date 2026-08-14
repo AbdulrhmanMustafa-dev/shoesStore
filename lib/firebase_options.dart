@@ -63,8 +63,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '323518590304',
     projectId: 'shoesstore-4e48b',
     storageBucket: 'shoesstore-4e48b.firebasestorage.app',
-    androidClientId: '323518590304-e9u2ghbptn6f8321djmduadnqb7kmlbr.apps.googleusercontent.com',
-    iosClientId: '323518590304-4ivnpqml1328a7n9dk8ds9imaln9diut.apps.googleusercontent.com',
+    androidClientId:
+        '323518590304-e9u2ghbptn6f8321djmduadnqb7kmlbr.apps.googleusercontent.com',
+    iosClientId:
+        '323518590304-4ivnpqml1328a7n9dk8ds9imaln9diut.apps.googleusercontent.com',
     iosBundleId: 'com.example.kicksvibe',
   );
   static const FirebaseOptions macos = FirebaseOptions(
@@ -73,8 +75,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '323518590304',
     projectId: 'shoesstore-4e48b',
     storageBucket: 'shoesstore-4e48b.firebasestorage.app',
-    androidClientId: '323518590304-e9u2ghbptn6f8321djmduadnqb7kmlbr.apps.googleusercontent.com',
-    iosClientId: '323518590304-4ivnpqml1328a7n9dk8ds9imaln9diut.apps.googleusercontent.com',
+    androidClientId:
+        '323518590304-e9u2ghbptn6f8321djmduadnqb7kmlbr.apps.googleusercontent.com',
+    iosClientId:
+        '323518590304-4ivnpqml1328a7n9dk8ds9imaln9diut.apps.googleusercontent.com',
     iosBundleId: 'com.example.kicksvibe',
   );
 

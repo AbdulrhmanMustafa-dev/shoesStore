@@ -1,10 +1,16 @@
 part of 'home_cubit.dart';
 
-abstract class HomeState {}
+abstract class HomeState {
+  const HomeState();
+}
 
-class HomeInitial extends HomeState {}
+class HomeInitial extends HomeState {
+  const HomeInitial();
+}
 
-class HomeLoading extends HomeState {}
+class HomeLoading extends HomeState {
+  const HomeLoading();
+}
 
 class HomeLoaded extends HomeState {
   final List<BrandModel> brands;
@@ -24,5 +30,5 @@ class HomeLoaded extends HomeState {
 
 class HomeError extends HomeState {
   final String errorMessage;
-  HomeError(this.errorMessage);
+  const HomeError(this.errorMessage);
 }

@@ -62,6 +62,7 @@ dev_dependencies:
   build_runner: ^2.15.1
   injectable_generator: ^2.12.1
   hive_ce_generator: ^1.11.1
+  flutter_native_splash: ^2.4.8
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -104,3 +105,14 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+flutter_native_splash:
+
+  color: "#FFFFFF" 
+  image: assets/images/logo.png 
+  
+  # color_dark: "#1E2832"
+  # image_dark: assets/images/logo_dark.png
+
+  android_12:
+    image: assets/images/logo.png
+    icon_background_color: "#FFFFFF"

@@ -1,4 +1,3 @@
-
 import 'package:hive_ce/hive_ce.dart';
 
 part 'product_model.g.dart';

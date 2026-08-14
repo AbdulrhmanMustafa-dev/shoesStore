@@ -58,7 +58,11 @@ class ProductDetailsContent extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             product.description,
-            style: const TextStyle(color: Colors.grey, height: 1.5, fontSize: 14),
+            style: const TextStyle(
+              color: Colors.grey,
+              height: 1.5,
+              fontSize: 14,
+            ),
           ),
           const SizedBox(height: 24),
           const Text(

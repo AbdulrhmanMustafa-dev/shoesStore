@@ -29,13 +29,18 @@ class FavoriteScreen extends StatelessWidget {
                       color: Color(0xFF1E2832),
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, AppRoutes.cart);
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(Icons.shopping_bag_outlined, size: 20),
                     ),
-                    child: const Icon(Icons.favorite_border_rounded, size: 20),
                   ),
                 ],
               ),
@@ -118,7 +123,7 @@ class FavoriteScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                        
+
                               // الصورة
                               Expanded(
                                 child: Center(
@@ -127,15 +132,16 @@ class FavoriteScreen extends StatelessWidget {
                                         ? product.images.first
                                         : '',
                                     fit: BoxFit.contain,
-                                    errorBuilder: (context, error, stackTrace) =>
-                                        const Icon(
-                                          Icons.broken_image,
-                                          color: Colors.grey,
-                                        ),
+                                    errorBuilder:
+                                        (context, error, stackTrace) =>
+                                            const Icon(
+                                              Icons.broken_image,
+                                              color: Colors.grey,
+                                            ),
                                   ),
                                 ),
                               ),
-                        
+
                               // التفاصيل
                               if (product.isBestSeller)
                                 const Text(
@@ -158,7 +164,8 @@ class FavoriteScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 4),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     '\$${product.price}',

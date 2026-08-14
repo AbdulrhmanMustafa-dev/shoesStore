@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kicksvibe/core/routes/app_routes.dart';
 import 'package:kicksvibe/core/widgets/custom_back_button.dart';
 
 class ProductDetailsHeader extends StatelessWidget {
@@ -20,13 +21,18 @@ class ProductDetailsHeader extends StatelessWidget {
               color: Color(0xFF1E2832),
             ),
           ),
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, AppRoutes.cart);
+            },
+            child: Container(
+              padding: const EdgeInsets.all(12),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(Icons.shopping_bag_outlined, size: 20),
             ),
-            child: const Icon(Icons.shopping_bag_outlined, size: 20),
           ),
         ],
       ),

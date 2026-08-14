@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kicksvibe/core/routes/app_routes.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({super.key});
@@ -39,13 +40,18 @@ class HomeHeader extends StatelessWidget {
         // Cart Icon with Badge
         Stack(
           children: [
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.cart);
+              },
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.shopping_bag_outlined, size: 20),
               ),
-              child: const Icon(Icons.shopping_bag_outlined, size: 20),
             ),
             Positioned(
               right: 2,

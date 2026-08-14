@@ -1,6 +1,6 @@
-
 import 'package:hive_ce/hive_ce.dart';
 part 'brand_model.g.dart';
+
 @HiveType(typeId: 1)
 class BrandModel {
   @HiveField(0)

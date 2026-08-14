@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kicksvibe/core/routes/app_routes.dart';
+import 'package:kicksvibe/features/Home/data/models/product_model.dart';
 import 'package:kicksvibe/features/Home/presentation/cubit/home_cubit.dart';
 import 'package:kicksvibe/features/Home/presentation/widgets/brands_list.dart';
 import 'package:kicksvibe/features/Home/presentation/widgets/home_header.dart';
@@ -100,9 +101,34 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(height: 24),
                 const BrandsList(),
                 const SizedBox(height: 24),
-                SectionTitle(title: 'Popular Shoes', onTap: () {}),
-                const SizedBox(height: 16),
-                const PopularShoesList(),
+                // ستحتاج لتغليف هذا الجزء بـ BlocBuilder أو قراءة الـ state الحالية
+                BlocBuilder<HomeCubit, HomeState>(
+                  builder: (context, state) {
+                    List<ProductModel> popular = [];
+                    if (state is HomeLoaded) {
+                      popular = state.popularProducts;
+                    }
+
+                    return Column(
+                      children: [
+                        SectionTitle(
+                          title: 'Popular Shoes',
+                          onTap: () {
+                            if (popular.isNotEmpty) {
+                              Navigator.pushNamed(
+                                context,
+                                AppRoutes.bestSellers,
+                                arguments: popular,
+                              );
+                            }
+                          },
+                        ),
+                        const SizedBox(height: 16),
+                        const PopularShoesList(),
+                      ],
+                    );
+                  },
+                ),
                 const SizedBox(height: 24),
                 SectionTitle(title: 'New Arrivals', onTap: () {}),
                 const SizedBox(height: 16),

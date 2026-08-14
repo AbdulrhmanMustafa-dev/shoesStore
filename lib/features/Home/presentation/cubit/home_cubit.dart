@@ -1,62 +1,42 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:hive_ce/hive_ce.dart';
 import 'package:kicksvibe/features/Home/data/models/product_model.dart';
 import 'package:kicksvibe/features/Home/data/models/brand_model.dart';
+import 'package:kicksvibe/features/Home/domain/repositories/home_repository.dart';
 import 'package:injectable/injectable.dart';
 
 part 'home_state.dart';
 
 @injectable
 class HomeCubit extends Cubit<HomeState> {
-  final FirebaseFirestore _firestore;
+  HomeCubit(this._repository) : super(const HomeInitial());
 
-  HomeCubit(this._firestore) : super(HomeInitial());
+  final HomeRepository _repository;
+  StreamSubscription<HomeCatalog>? _catalogSubscription;
 
   List<ProductModel> _allProducts = const [];
   List<BrandModel> _brands = const [];
   String selectedBrand = 'All'; // الديفولت هو All
 
- Future<void> fetchHomeData() async {
+  Future<void> fetchHomeData() async {
+    await _catalogSubscription?.cancel();
     emit(HomeLoading());
-    try {
-      final productsBox = Hive.box<ProductModel>('homeProductsBox');
-      final brandsBox = Hive.box<BrandModel>('brandsBox');
-
-      // 1. عرض البيانات المخزنة محلياً أولاً (للسرعة والأوفلاين)
-      if (productsBox.isNotEmpty && brandsBox.isNotEmpty) {
-        _allProducts = productsBox.values.toList();
-        _brands = brandsBox.values.toList();
+    _catalogSubscription = _repository.watchCatalog().listen(
+      (catalog) {
+        _allProducts = catalog.products;
+        _brands = catalog.brands;
+        if (!_brands.any((brand) => brand.title == selectedBrand)) {
+          selectedBrand = 'All';
+        }
         _emitFilteredProducts();
-      }
-
-      // 2. جلب البيانات الحديثة من Firebase
-      final brandSnapshot = await _firestore.collection('brands').get();
-      final newBrands = [
-        BrandModel(id: '0', title: 'All', iconUrl: ''),
-        ...brandSnapshot.docs.map(
-          (doc) => BrandModel.fromJson(doc.data(), doc.id),
-        ),
-      ];
-
-      final productSnapshot = await _firestore.collection('products').get();
-      final newProducts = productSnapshot.docs
-          .map((doc) => ProductModel.fromJson(doc.data(), doc.id))
-          .toList();
-
-      // 3. تحديث البيانات المحلية (الكاش)
-      await brandsBox.clear();
-      await brandsBox.addAll(newBrands);
-      await productsBox.clear();
-      await productsBox.addAll(newProducts);
-
-      _allProducts = newProducts;
-      _brands = newBrands;
-      _emitFilteredProducts();
-    } catch (e) {
-      // إذا فشل النت ولا يوجد كاش، نعرض خطأ
-      if (_allProducts.isEmpty) emit(HomeError("حدث خطأ: ${e.toString()}"));
-    }
+      },
+      onError: (Object error, StackTrace stackTrace) {
+        if (!isClosed && _allProducts.isEmpty) {
+          emit(const HomeError('Could not load products. Please try again.'));
+        }
+      },
+    );
   }
 
   void changeBrand(String brandTitle) {
@@ -83,5 +63,11 @@ class HomeCubit extends Cubit<HomeState> {
         newArrivalProducts: newArrivals,
       ),
     );
+  }
+
+  @override
+  Future<void> close() async {
+    await _catalogSubscription?.cancel();
+    return super.close();
   }
 }

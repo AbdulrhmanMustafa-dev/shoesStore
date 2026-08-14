@@ -31,14 +31,14 @@ class CachedProductImage extends StatelessWidget {
       height: height,
       // The package checks its disk cache before attempting the network.
       // This keeps the Home images available alongside the Hive product cache.
-      placeholder: (_, __) => const Center(
+      placeholder: (context, url) => const Center(
         child: SizedBox(
           width: 20,
           height: 20,
           child: CircularProgressIndicator(strokeWidth: 2),
         ),
       ),
-      errorWidget: (_, __, ___) => _errorPlaceholder(),
+      errorWidget: (context, url, error) => _errorPlaceholder(),
     );
   }
 
