@@ -27,6 +27,14 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
+ final TextEditingController _phoneController = TextEditingController();
+
+  @override
+  void dispose() {
+    _phoneController
+        .dispose(); // 💡 2. تدميره عند الخروج من شاشة الـ Checkout بالكامل
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
@@ -133,52 +141,47 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 
-  Future<void> _showEditPhoneDialog(
+  void _showEditPhoneDialog(
     BuildContext context,
     String currentPhone,
-  ) async {
-    final controller = TextEditingController(
-      text: currentPhone == 'Add your phone number' ? '' : currentPhone,
-    );
-    try {
-      await showDialog(
-        context: context,
-        builder: (dialogContext) => AlertDialog(
-          title: const Text('Edit Phone Number'),
-          content: TextField(
-            controller: controller,
-            keyboardType: TextInputType.phone,
-            decoration: const InputDecoration(
-              hintText: 'Enter phone number',
-              border: OutlineInputBorder(),
-            ),
+  ) {
+    // 💡 3. تعيين النص قبل فتح الديالوج
+    _phoneController.text = currentPhone == 'Add your phone number' ? '' : currentPhone;
+    
+    final checkoutCubit = context.read<CheckoutCubit>();
+
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Edit Phone Number'),
+        content: TextField(
+          controller: _phoneController, // 💡 4. استخدام الـ Controller المحفوظ
+          keyboardType: TextInputType.phone,
+          decoration: const InputDecoration(
+            hintText: 'Enter phone number',
+            border: OutlineInputBorder(),
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(dialogContext),
-              child: const Text('Cancel'),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                if (!dialogContext.mounted) return;
-                await dialogContext.read<CheckoutCubit>().updatePhone(
-                  controller.text,
-                );
-                if (dialogContext.mounted) Navigator.pop(dialogContext);
-              },
-              child: Text(
-                'Save',
-                style: TextStyle(
-                  color: Theme.of(dialogContext).colorScheme.onPrimary,
-                ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              checkoutCubit.updatePhone(_phoneController.text);
+              Navigator.pop(dialogContext);
+            },
+            child: Text(
+              'Save',
+              style: TextStyle(
+                color: Theme.of(dialogContext).colorScheme.onPrimary,
               ),
             ),
-          ],
-        ),
-      );
-    } finally {
-      controller.dispose();
-    }
+          ),
+        ],
+      ),
+    );
   }
 
   Future<void> _handlePaymentPressed() async {

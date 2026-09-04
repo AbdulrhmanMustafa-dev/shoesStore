@@ -7,7 +7,7 @@ import 'package:geocoding/geocoding.dart' as geocoding;
 
 part 'checkout_state.dart';
 
-@lazySingleton
+@injectable
 class CheckoutCubit extends Cubit<CheckoutState> {
   final CacheHelper _cacheHelper;
 

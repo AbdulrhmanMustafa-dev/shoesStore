@@ -115,7 +115,7 @@ class OrderDetailsScreen extends StatelessWidget {
                                 children: [
                                   Text(
                                     item['name'] ?? 'Product',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
                                     maxLines: 1,

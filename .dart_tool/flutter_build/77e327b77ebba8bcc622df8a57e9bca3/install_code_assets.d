@@ -1,0 +1,1 @@
+ /run/media/abdulrhman/PC/Flutter\ Apps/shoesStore/.dart_tool/flutter_build/77e327b77ebba8bcc622df8a57e9bca3/native_assets.json: 

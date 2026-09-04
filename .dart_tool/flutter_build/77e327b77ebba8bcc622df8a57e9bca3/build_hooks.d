@@ -1,0 +1,1 @@
+ /run/media/abdulrhman/PC/Flutter\ Apps/shoesStore/.dart_tool/flutter_build/77e327b77ebba8bcc622df8a57e9bca3/build_hooks_result.json:  /opt/flutter/bin/cache/dart-sdk/version /run/media/abdulrhman/PC/Flutter\ Apps/shoesStore/.dart_tool/package_config.json /run/media/abdulrhman/PC/Flutter\ Apps/shoesStore/pubspec.yaml

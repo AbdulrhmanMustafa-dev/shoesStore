@@ -119,11 +119,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i147.HomeCubit>(
       () => _i147.HomeCubit(gh<_i869.HomeRepository>()),
     );
+    gh.factory<_i683.CheckoutCubit>(
+      () => _i683.CheckoutCubit(gh<_i708.CacheHelper>()),
+    );
     gh.factory<_i56.OnboardingCubit>(
       () => _i56.OnboardingCubit(gh<_i708.CacheHelper>()),
-    );
-    gh.lazySingleton<_i683.CheckoutCubit>(
-      () => _i683.CheckoutCubit(gh<_i708.CacheHelper>()),
     );
     gh.lazySingleton<_i505.ProfileCubit>(
       () => _i505.ProfileCubit(gh<_i708.CacheHelper>()),
