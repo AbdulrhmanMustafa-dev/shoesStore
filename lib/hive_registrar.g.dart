@@ -3,14 +3,16 @@
 // Check in to version control
 
 import 'package:hive_ce/hive_ce.dart';
-import 'package:kicksvibe/features/Home/data/models/brand_model.dart';
-import 'package:kicksvibe/features/Home/data/models/product_model.dart';
 import 'package:kicksvibe/features/cart/data/models/cart_item_model.dart';
+import 'package:kicksvibe/features/home/data/models/brand_model.dart';
+import 'package:kicksvibe/features/home/data/models/product_model.dart';
+import 'package:kicksvibe/features/notifications/data/models/NotificationModel.dart';
 
 extension HiveRegistrar on HiveInterface {
   void registerAdapters() {
     registerAdapter(BrandModelAdapter());
     registerAdapter(CartItemModelAdapter());
+    registerAdapter(NotificationModelAdapter());
     registerAdapter(ProductModelAdapter());
   }
 }
@@ -19,6 +21,7 @@ extension IsolatedHiveRegistrar on IsolatedHiveInterface {
   void registerAdapters() {
     registerAdapter(BrandModelAdapter());
     registerAdapter(CartItemModelAdapter());
+    registerAdapter(NotificationModelAdapter());
     registerAdapter(ProductModelAdapter());
   }
 }

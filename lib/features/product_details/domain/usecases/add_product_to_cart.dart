@@ -1,5 +1,5 @@
 import 'package:injectable/injectable.dart';
-import 'package:kicksvibe/features/Home/data/models/product_model.dart';
+import 'package:kicksvibe/features/home/data/models/product_model.dart';
 import 'package:kicksvibe/features/cart/data/models/cart_item_model.dart';
 import 'package:kicksvibe/features/cart/domain/repositories/cart_repository.dart';
 

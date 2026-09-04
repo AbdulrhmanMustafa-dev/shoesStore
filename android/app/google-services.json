@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "323518590304-pl3l93b9089p4k9um12jl5p0knc6ejcf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kicksvibe",
+            "certificate_hash": "dd04a2efee1e711371a1cebb1b56448951cc4d6d"
+          }
+        },
+        {
           "client_id": "323518590304-ps0cvbc82g00hupd6ibrl6933us588jn.apps.googleusercontent.com",
           "client_type": 3
         }

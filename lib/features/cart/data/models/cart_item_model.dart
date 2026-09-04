@@ -1,5 +1,5 @@
 import 'package:hive_ce/hive_ce.dart';
-import 'package:kicksvibe/features/Home/data/models/product_model.dart';
+import 'package:kicksvibe/features/home/data/models/product_model.dart';
 
 part 'cart_item_model.g.dart';
 

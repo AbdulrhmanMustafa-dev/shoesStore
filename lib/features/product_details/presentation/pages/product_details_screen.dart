@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kicksvibe/features/Home/data/models/product_model.dart';
+import 'package:kicksvibe/features/home/data/models/product_model.dart';
+import 'package:kicksvibe/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:kicksvibe/features/product_details/presentation/widgets/product_bottom_bar.dart';
 import 'package:kicksvibe/features/product_details/presentation/widgets/product_details_content.dart';
 import 'package:kicksvibe/features/product_details/presentation/widgets/product_details_header.dart';
@@ -37,6 +38,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       listenWhen: (previous, current) =>
           previous.cartResult != current.cartResult,
       listener: (context, state) {
+        // 💡 التحديث: إجبار السلة على قراءة البيانات الجديدة
+        if (state.cartResult == ProductCartResult.added) {
+          context.read<CartCubit>().loadCart();
+        }
+
         final message = switch (state.cartResult) {
           ProductCartResult.added => 'Added to cart!',
           ProductCartResult.sizeUnavailable =>
@@ -44,6 +50,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           ProductCartResult.failed => 'Could not add this item to the cart.',
           null => null,
         };
+
         if (message != null) {
           ScaffoldMessenger.of(
             context,
@@ -51,7 +58,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         }
       },
       child: Scaffold(
-        backgroundColor: const Color(0xFFF8F9FA),
+        backgroundColor: Theme.of(context).colorScheme.surface,
         bottomNavigationBar: ProductBottomBar(product: widget.product),
         body: SafeArea(
           child: SingleChildScrollView(

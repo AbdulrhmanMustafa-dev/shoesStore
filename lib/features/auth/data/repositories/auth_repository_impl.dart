@@ -6,10 +6,11 @@ import 'package:kicksvibe/features/auth/domain/repositories/auth_repository.dart
 
 @LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
-  AuthRepositoryImpl(this._auth, this._googleSignIn);
+  AuthRepositoryImpl(this._auth, this._googleSignIn, this._cacheHelper);
 
   final FirebaseAuth _auth;
   final GoogleSignIn _googleSignIn;
+  final CacheHelper _cacheHelper;
   bool _googleSignInInitialized = false;
 
   @override
@@ -22,7 +23,7 @@ class AuthRepositoryImpl implements AuthRepository {
         email: email.trim(),
         password: password,
       );
-      return _storeSignedInUser(credential);
+      return await _storeSignedInUser(credential);
     } on FirebaseAuthException catch (exception) {
       throw AuthException(_firebaseMessage(exception));
     }
@@ -44,7 +45,7 @@ class AuthRepositoryImpl implements AuthRepository {
         throw const AuthException('Could not create the account.');
       }
       await user.updateDisplayName(name.trim());
-      await CacheHelper.saveIsSignedIn(value: true);
+      await _cacheHelper.saveIsSignedIn(value: true);
       return user.uid;
     } on FirebaseAuthException catch (exception) {
       throw AuthException(_firebaseMessage(exception));
@@ -75,7 +76,9 @@ class AuthRepositoryImpl implements AuthRepository {
         accessToken: authorization.accessToken,
         idToken: authentication.idToken,
       );
-      return _storeSignedInUser(await _auth.signInWithCredential(credential));
+      return await _storeSignedInUser(
+        await _auth.signInWithCredential(credential),
+      );
     } on GoogleSignInException catch (exception) {
       if (exception.code == GoogleSignInExceptionCode.canceled) {
         throw const AuthException('Sign-in was cancelled.');
@@ -99,7 +102,7 @@ class AuthRepositoryImpl implements AuthRepository {
     if (user == null) {
       throw const AuthException('Could not sign in. Please try again.');
     }
-    await CacheHelper.saveIsSignedIn(value: true);
+    await _cacheHelper.saveIsSignedIn(value: true);
     return user.uid;
   }
 

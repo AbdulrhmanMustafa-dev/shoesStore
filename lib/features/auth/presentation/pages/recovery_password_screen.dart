@@ -24,7 +24,7 @@ class _RecoveryPasswordScreenState extends State<RecoveryPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -34,7 +34,7 @@ class _RecoveryPasswordScreenState extends State<RecoveryPasswordScreen> {
               children: [
                 CustomBackButton(onTap: () => Navigator.pop(context)),
                 const SizedBox(height: 32),
-                const Center(
+                Center(
                   child: Column(
                     children: [
                       Text(
@@ -42,7 +42,7 @@ class _RecoveryPasswordScreenState extends State<RecoveryPasswordScreen> {
                         style: TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFF1E2832),
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -51,7 +51,7 @@ class _RecoveryPasswordScreenState extends State<RecoveryPasswordScreen> {
                         'Please Enter Your Email Address To\nReceive a Verification Code',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.grey,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
                           height: 1.5,
                         ),
                         textAlign: TextAlign.center,
@@ -99,7 +99,9 @@ class _RecoveryPasswordScreenState extends State<RecoveryPasswordScreen> {
                                 );
                               },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF5A9AE5),
+                          backgroundColor: Theme.of(
+                            context,
+                          ).colorScheme.primary,
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(14),
@@ -107,13 +109,15 @@ class _RecoveryPasswordScreenState extends State<RecoveryPasswordScreen> {
                           elevation: 0,
                         ),
                         child: state is AuthLoading
-                            ? const CircularProgressIndicator(
-                                color: Colors.white,
+                            ? CircularProgressIndicator(
+                                color: Theme.of(context).colorScheme.onPrimary,
                               )
-                            : const Text(
+                            : Text(
                                 'Continue',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onPrimary,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
                                 ),

@@ -1,4 +1,4 @@
-import 'package:kicksvibe/features/Home/data/models/product_model.dart';
+import 'package:kicksvibe/features/home/data/models/product_model.dart';
 
 abstract class FavoriteRepository {
   Stream<List<ProductModel>> watchFavorites();

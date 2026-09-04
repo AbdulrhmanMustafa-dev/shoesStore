@@ -4,4 +4,5 @@ abstract class CartRepository {
   List<CartItemModel> getItems();
   Future<void> save(CartItemModel item);
   Future<void> remove(String itemId);
+  Future<void> clearCart();
 }

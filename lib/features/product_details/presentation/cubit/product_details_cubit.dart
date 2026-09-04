@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:kicksvibe/features/Home/data/models/product_model.dart';
+import 'package:kicksvibe/features/home/data/models/product_model.dart';
 import 'package:kicksvibe/features/product_details/domain/usecases/add_product_to_cart.dart';
 
 part 'product_details_state.dart';

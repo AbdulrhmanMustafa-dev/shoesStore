@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kicksvibe/core/routes/app_routes.dart';
-import 'package:kicksvibe/core/widgets/custom_back_button.dart';
 import 'package:kicksvibe/core/widgets/custom_text_field.dart';
+import 'package:kicksvibe/core/widgets/cached_product_image.dart';
 import 'package:kicksvibe/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:kicksvibe/features/auth/presentation/widgets/auth_header.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -26,48 +27,25 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA), // لون خلفية الشاشة
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // زر الرجوع
-              CustomBackButton(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              const SizedBox(height: 32),
-
-              // العناوين
-              const Center(
-                child: Column(
-                  children: [
-                    Text(
-                      'Hello Again!',
-                      style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF1E2832),
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    Text(
-                      "Welcome Back You've Been Missed!",
-                      style: TextStyle(fontSize: 16, color: Colors.grey),
-                    ),
-                  ],
-                ),
-              ),
               const SizedBox(height: 40),
+              const AuthHeader(
+                title: 'Hello Again!',
+                subtitle: "Welcome Back You've Been Missed!",
+              ),
+              const SizedBox(height: 48),
 
-              // حقول الإدخال
+              // Input Fields
               CustomTextField(
                 label: 'Email Address',
                 hint: 'alissonbecker@gmail.com',
                 controller: emailController,
+                keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 24),
               CustomTextField(
@@ -82,9 +60,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: TextButton(
                   onPressed: () =>
                       Navigator.pushNamed(context, AppRoutes.recoveryPassword),
-                  child: const Text(
+                  child: Text(
                     'Recovery Password',
-                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      fontSize: 14,
+                    ),
                   ),
                 ),
               ),
@@ -95,97 +76,101 @@ class _LoginScreenState extends State<LoginScreen> {
                   if (state is AuthSuccess) {
                     Navigator.pushReplacementNamed(context, AppRoutes.home);
                   } else if (state is AuthFailure) {
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(SnackBar(content: Text(state.errorMessage)));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(state.errorMessage),
+                        backgroundColor: Theme.of(context).colorScheme.error,
+                      ),
+                    );
                   }
                 },
                 builder: (context, state) {
-                  return SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: state is AuthLoading
-                          ? null
-                          : () {
-                              // الـ onPressed وظيفته فقط إرسال الحدث (Event) للكيوبت
+                  return ElevatedButton(
+                    onPressed: state is AuthLoading
+                        ? null
+                        : () {
+                            if (emailController.text.isNotEmpty &&
+                                passwordController.text.isNotEmpty) {
                               context.read<AuthCubit>().signIn(
                                 email: emailController.text,
                                 password: passwordController.text,
                               );
-                            },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF5A9AE5),
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                        elevation: 0,
-                      ),
-                      child: state is AuthLoading
-                          ? const CircularProgressIndicator(
-                              color: Colors.white,
-                            ) // إظهار تحميل أثناء الطلب
-                          : const Text(
-                              'Sign In',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                              ),
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    'Please enter email and password',
+                                  ),
+                                ),
+                              );
+                            }
+                          },
+                    child: state is AuthLoading
+                        ? SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                              strokeWidth: 2,
                             ),
-                    ),
+                          )
+                        : const Text('Sign In'),
                   );
                 },
               ),
               const SizedBox(height: 16),
 
-              // زر تسجيل الدخول بجوجل
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton.icon(
-                  onPressed: () {
-                    context.read<AuthCubit>().signInWithGoogle();
-                  },
-                  icon: Image.network(
-                    'https://cdn-icons-png.flaticon.com/512/300/300221.png', // رابط PNG شغال
-                    height: 24,
-                  ), // يفضل استخدام asset هنا
-                  label: const Text(
-                    'Sign in with google',
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
+              // Google Sign In Button
+              OutlinedButton.icon(
+                onPressed: () {
+                  context.read<AuthCubit>().signInWithGoogle();
+                },
+                icon: const CachedProductImage(
+                  imageUrl:
+                      'https://cdn-icons-png.flaticon.com/512/300/300221.png',
+                  height: 24,
+                  width: 24,
+                ),
+                label: Text(
+                  'Sign in with Google',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurface,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
                   ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                    elevation: 0,
+                ),
+                style: OutlinedButton.styleFrom(
+                  minimumSize: const Size(double.infinity, 54),
+                  side: BorderSide.none,
+                  backgroundColor: Theme.of(
+                    context,
+                  ).colorScheme.surfaceContainerHighest,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14),
                   ),
                 ),
               ),
 
-              const SizedBox(height: 40),
+              const SizedBox(height: 48),
 
-              // رابط إنشاء حساب جديد
+              // Sign Up Link
               Center(
                 child: GestureDetector(
                   onTap: () {
                     Navigator.pushNamed(context, AppRoutes.register);
                   },
                   child: RichText(
-                    text: const TextSpan(
+                    text: TextSpan(
                       text: "Don't Have An Account? ",
-                      style: TextStyle(color: Colors.grey, fontSize: 14),
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        fontSize: 14,
+                      ),
                       children: [
                         TextSpan(
                           text: 'Sign Up For Free',
                           style: TextStyle(
-                            color: Colors.black87,
+                            color: Theme.of(context).colorScheme.onSurface,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

@@ -13,12 +13,12 @@ class ProductDetailsHeader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           CustomBackButton(onTap: () => Navigator.pop(context)),
-          const Text(
+          Text(
             'Product Details',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF1E2832),
+              color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
           GestureDetector(
@@ -27,8 +27,8 @@ class ProductDetailsHeader extends StatelessWidget {
             },
             child: Container(
               padding: const EdgeInsets.all(12),
-              decoration: const BoxDecoration(
-                color: Colors.white,
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surfaceContainer,
                 shape: BoxShape.circle,
               ),
               child: const Icon(Icons.shopping_bag_outlined, size: 20),

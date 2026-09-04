@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kicksvibe/core/routes/app_routes.dart';
 import 'package:kicksvibe/core/widgets/custom_back_button.dart';
+import 'package:kicksvibe/core/widgets/cached_product_image.dart';
 import 'package:kicksvibe/features/favourite/presentation/cubit/favourite_cubit.dart';
 
 class FavoriteScreen extends StatelessWidget {
@@ -10,7 +11,7 @@ class FavoriteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
         child: Column(
           children: [
@@ -21,12 +22,12 @@ class FavoriteScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CustomBackButton(onTap: () => Navigator.pop(context)),
-                  const Text(
+                  Text(
                     'Favourite',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF1E2832),
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                   GestureDetector(
@@ -35,11 +36,15 @@ class FavoriteScreen extends StatelessWidget {
                     },
                     child: Container(
                       padding: const EdgeInsets.all(12),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.surfaceContainer,
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(Icons.shopping_bag_outlined, size: 20),
+                      child: Icon(
+                        Icons.shopping_bag_outlined,
+                        size: 20,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
                     ),
                   ),
                 ],
@@ -60,16 +65,23 @@ class FavoriteScreen extends StatelessWidget {
                         child: Text(
                           state.errorMessage!,
                           textAlign: TextAlign.center,
-                          style: const TextStyle(color: Colors.grey),
+                          style: TextStyle(
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onSurfaceVariant,
+                          ),
                         ),
                       ),
                     );
                   }
                   if (state.favoriteProducts.isEmpty) {
-                    return const Center(
+                    return Center(
                       child: Text(
                         'No Favorite Shoes Yet!',
-                        style: TextStyle(color: Colors.grey, fontSize: 16),
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                          fontSize: 16,
+                        ),
                       ),
                     );
                   }
@@ -99,7 +111,9 @@ class FavoriteScreen extends StatelessWidget {
                         child: Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.surfaceContainer,
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Column(
@@ -112,13 +126,15 @@ class FavoriteScreen extends StatelessWidget {
                                     .toggleFavorite(product),
                                 child: Container(
                                   padding: const EdgeInsets.all(6),
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xFFF8F9FA),
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.surface,
                                     shape: BoxShape.circle,
                                   ),
-                                  child: const Icon(
+                                  child: Icon(
                                     Icons.favorite,
-                                    color: Colors.redAccent,
+                                    color: Theme.of(context).colorScheme.error,
                                     size: 16,
                                   ),
                                 ),
@@ -127,27 +143,23 @@ class FavoriteScreen extends StatelessWidget {
                               // الصورة
                               Expanded(
                                 child: Center(
-                                  child: Image.network(
-                                    product.images.isNotEmpty
+                                  child: CachedProductImage(
+                                    imageUrl: product.images.isNotEmpty
                                         ? product.images.first
                                         : '',
                                     fit: BoxFit.contain,
-                                    errorBuilder:
-                                        (context, error, stackTrace) =>
-                                            const Icon(
-                                              Icons.broken_image,
-                                              color: Colors.grey,
-                                            ),
                                   ),
                                 ),
                               ),
 
                               // التفاصيل
                               if (product.isBestSeller)
-                                const Text(
+                                Text(
                                   'BEST SELLER',
                                   style: TextStyle(
-                                    color: Color(0xFF5A9AE5),
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primary,
                                     fontSize: 10,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -179,12 +191,16 @@ class FavoriteScreen extends StatelessWidget {
                                     children: [
                                       CircleAvatar(
                                         radius: 6,
-                                        backgroundColor: Colors.yellow.shade300,
+                                        backgroundColor: Theme.of(
+                                          context,
+                                        ).colorScheme.tertiary,
                                       ),
                                       const SizedBox(width: 4),
-                                      const CircleAvatar(
+                                      CircleAvatar(
                                         radius: 6,
-                                        backgroundColor: Colors.tealAccent,
+                                        backgroundColor: Theme.of(
+                                          context,
+                                        ).colorScheme.secondary,
                                       ),
                                     ],
                                   ),

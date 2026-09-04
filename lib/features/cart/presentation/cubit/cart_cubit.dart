@@ -7,13 +7,13 @@ part 'cart_state.dart';
 
 @lazySingleton
 class CartCubit extends Cubit<CartState> {
-  CartCubit(this._repository) : super(CartState()) {
-    _loadCart();
+  CartCubit(this._repository) : super(const CartState()) {
+    loadCart();
   }
 
   final CartRepository _repository;
 
-  void _loadCart() {
+  void loadCart() {
     _emitUpdatedState(_repository.getItems());
   }
 
@@ -25,7 +25,7 @@ class CartCubit extends Cubit<CartState> {
     } else {
       await _repository.save(item);
     }
-    _loadCart();
+    loadCart();
   }
 
   Future<void> incrementQuantity(String itemId) async {
@@ -33,7 +33,7 @@ class CartCubit extends Cubit<CartState> {
     if (item != null) {
       item.quantity++;
       await _repository.save(item);
-      _loadCart();
+      loadCart();
     }
   }
 
@@ -42,13 +42,18 @@ class CartCubit extends Cubit<CartState> {
     if (item != null && item.quantity > 1) {
       item.quantity--;
       await _repository.save(item);
-      _loadCart();
+      loadCart();
     }
   }
 
   Future<void> removeFromCart(String itemId) async {
     await _repository.remove(itemId);
-    _loadCart();
+    loadCart();
+  }
+
+  Future<void> clearCart() async {
+    await _repository.clearCart();
+    loadCart(); // لتحديث الـ State وتصفير الإجمالي
   }
 
   CartItemModel? _itemById(String itemId) {

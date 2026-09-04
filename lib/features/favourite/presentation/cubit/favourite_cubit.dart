@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:kicksvibe/features/Home/data/models/product_model.dart';
+import 'package:kicksvibe/features/home/data/models/product_model.dart';
 import 'package:kicksvibe/features/favourite/data/repositories/favorite_repository_impl.dart';
 import 'package:kicksvibe/features/favourite/domain/repositories/favorite_repository.dart';
 

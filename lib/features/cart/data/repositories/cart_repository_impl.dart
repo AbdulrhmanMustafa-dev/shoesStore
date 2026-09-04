@@ -17,4 +17,9 @@ class CartRepositoryImpl implements CartRepository {
 
   @override
   Future<void> save(CartItemModel item) => _box.put(item.id, item);
+
+  @override
+  Future<void> clearCart() async {
+    await _box.clear(); // بيمسح كل المنتجات من Hive
+  }
 }

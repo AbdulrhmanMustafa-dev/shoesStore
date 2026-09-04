@@ -5,6 +5,8 @@ class CustomTextField extends StatefulWidget {
   final String hint;
   final bool isPassword;
   final TextEditingController? controller;
+  final TextInputType? keyboardType;
+  final bool readOnly; // 💡 إضافة الخاصية هنا
 
   const CustomTextField({
     super.key,
@@ -12,6 +14,8 @@ class CustomTextField extends StatefulWidget {
     required this.hint,
     this.isPassword = false,
     this.controller,
+    this.keyboardType,
+    this.readOnly = false, // 💡 القيمة الافتراضية
   });
 
   @override
@@ -28,42 +32,34 @@ class _CustomTextFieldState extends State<CustomTextField> {
       children: [
         Text(
           widget.label,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF1E2832), // لون مقارب للتصميم
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
         const SizedBox(height: 8),
         TextFormField(
           controller: widget.controller,
           obscureText: widget.isPassword ? _obscureText : false,
+          keyboardType: widget.keyboardType,
+          readOnly: widget.readOnly, // 💡 تفعيل الخاصية
           decoration: InputDecoration(
             hintText: widget.hint,
-            hintStyle: const TextStyle(color: Colors.grey, fontSize: 14),
-            filled: true,
-            fillColor: Colors.white, // لون خلفية الحقل
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 16,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(14),
-              borderSide: BorderSide.none,
-            ),
+            // تغيير لون الخلفية لتمييز حالة القراءة فقط (اختياري)
+            fillColor: widget.readOnly
+                ? Theme.of(context).colorScheme.surfaceContainerHighest
+                : Theme.of(context).colorScheme.surface,
             suffixIcon: widget.isPassword
                 ? IconButton(
                     icon: Icon(
                       _obscureText
                           ? Icons.visibility_off_outlined
                           : Icons.visibility_outlined,
-                      color: Colors.grey,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
-                    onPressed: () {
-                      setState(() {
-                        _obscureText = !_obscureText;
-                      });
-                    },
+                    onPressed: () =>
+                        setState(() => _obscureText = !_obscureText),
                   )
                 : null,
           ),

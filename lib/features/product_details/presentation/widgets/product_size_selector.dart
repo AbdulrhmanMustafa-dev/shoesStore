@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kicksvibe/features/Home/data/models/product_model.dart';
+import 'package:kicksvibe/features/home/data/models/product_model.dart';
 import 'package:kicksvibe/features/product_details/presentation/cubit/product_details_cubit.dart';
 
 class ProductSizeHeader extends StatelessWidget {
@@ -8,7 +8,7 @@ class ProductSizeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
@@ -16,7 +16,7 @@ class ProductSizeHeader extends StatelessWidget {
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: Color(0xFF1E2832),
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
         Row(
@@ -25,13 +25,23 @@ class ProductSizeHeader extends StatelessWidget {
               'EU',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF1E2832),
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
             SizedBox(width: 8),
-            Text('US', style: TextStyle(color: Colors.grey)),
+            Text(
+              'US',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+            ),
             SizedBox(width: 8),
-            Text('UK', style: TextStyle(color: Colors.grey)),
+            Text(
+              'UK',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+            ),
           ],
         ),
       ],
@@ -64,14 +74,16 @@ class ProductSizeSelector extends StatelessWidget {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: isSelected
-                      ? const Color(0xFF5A9AE5)
-                      : const Color(0xFFF8F9FA),
+                      ? Theme.of(context).colorScheme.primary
+                      : Theme.of(context).colorScheme.surfaceContainerHighest,
                   shape: BoxShape.circle,
                 ),
                 child: Text(
                   product.sizes[index].toString(),
                   style: TextStyle(
-                    color: isSelected ? Colors.white : Colors.grey,
+                    color: isSelected
+                        ? Theme.of(context).colorScheme.onPrimary
+                        : Theme.of(context).colorScheme.onSurfaceVariant,
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                   ),

@@ -21,7 +21,7 @@ class CachedProductImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (imageUrl.trim().isEmpty) {
-      return _errorPlaceholder();
+      return _errorPlaceholder(context);
     }
 
     return CachedNetworkImage(
@@ -29,24 +29,25 @@ class CachedProductImage extends StatelessWidget {
       fit: fit,
       width: width,
       height: height,
-      // The package checks its disk cache before attempting the network.
-      // This keeps the Home images available alongside the Hive product cache.
-      placeholder: (context, url) => const Center(
+      placeholder: (context, url) => Center(
         child: SizedBox(
           width: 20,
           height: 20,
-          child: CircularProgressIndicator(strokeWidth: 2),
+          child: CircularProgressIndicator(
+            strokeWidth: 2,
+            color: Theme.of(context).colorScheme.primary,
+          ),
         ),
       ),
-      errorWidget: (context, url, error) => _errorPlaceholder(),
+      errorWidget: (context, url, error) => _errorPlaceholder(context),
     );
   }
 
-  Widget _errorPlaceholder() => Center(
+  Widget _errorPlaceholder(BuildContext context) => Center(
     child: Icon(
       Icons.image_not_supported_outlined,
       size: errorIconSize,
-      color: const Color(0xFF8B98A5),
+      color: Theme.of(context).colorScheme.onSurfaceVariant,
     ),
   );
 }

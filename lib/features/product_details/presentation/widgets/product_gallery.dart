@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kicksvibe/core/widgets/cached_product_image.dart';
-import 'package:kicksvibe/features/Home/data/models/product_model.dart';
+import 'package:kicksvibe/features/home/data/models/product_model.dart';
 import 'package:kicksvibe/features/product_details/presentation/cubit/product_details_cubit.dart';
 
 class ProductGallery extends StatelessWidget {
@@ -44,11 +44,11 @@ class ProductGallery extends StatelessWidget {
                 margin: const EdgeInsets.only(right: 12),
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF8F9FA),
+                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
                     color: isSelected
-                        ? const Color(0xFF5A9AE5)
+                        ? Theme.of(context).colorScheme.primary
                         : Colors.transparent,
                     width: 2,
                   ),
@@ -61,12 +61,14 @@ class ProductGallery extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.all(4),
                         decoration: BoxDecoration(
-                          color: Colors.black.withAlpha(102),
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.scrim.withAlpha(102),
                           shape: BoxShape.circle,
                         ),
-                        child: const Icon(
+                        child: Icon(
                           Icons.threed_rotation,
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.onPrimary,
                           size: 16,
                         ),
                       ),

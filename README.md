@@ -1,18 +1,35 @@
-# kicksvibe
+# KicksVibe
 
-A new Flutter project.
+KicksVibe is a Flutter shoe-store app with Firebase authentication, a live
+catalog, favourites, a persistent cart, checkout location and order history.
 
-## Getting Started
+## Run locally
 
-This project is a starting point for a Flutter application.
+1. Install Flutter and run `flutter pub get`.
+2. Configure Firebase for each platform you plan to run.
+3. Start the app with `flutter run`.
 
-A few resources to get you started if this is your first Flutter project:
+## Payment setup
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+Payment credentials are deliberately not stored in this repository. Supply the
+following values only through your secure CI/CD secrets or local environment:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# shoesStore
+```text
+--dart-define=PAYMOB_API_KEY=...
+--dart-define=PAYMOB_CARD_INTEGRATION_ID=...
+--dart-define=PAYMOB_WALLET_INTEGRATION_ID=...
+--dart-define=PAYMOB_IFRAME_ID=...
+```
+
+For example, append those `--dart-define` options to `flutter run`. Until all
+four values are provided, checkout safely reports that payment is not
+configured instead of sending requests with a secret embedded in the app.
+
+## Quality checks
+
+Run the following before publishing a build:
+
+```text
+flutter analyze
+flutter test
+```

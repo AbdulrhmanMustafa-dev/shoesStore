@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:kicksvibe/core/di/injection.dart';
 import 'package:kicksvibe/core/routes/app_routes.dart';
 import 'package:kicksvibe/core/utils/cache_helper.dart';
 
@@ -14,12 +15,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _routeUser();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _routeUser();
+    });
   }
 
   Future<void> _routeUser() async {
     final isSignedIn = FirebaseAuth.instance.currentUser != null;
-    final bool getStartedPressed = await CacheHelper.getGetStartedPressed();
+    final bool getStartedPressed = getIt<CacheHelper>().getGetStartedPressed();
 
     if (!mounted) return;
 

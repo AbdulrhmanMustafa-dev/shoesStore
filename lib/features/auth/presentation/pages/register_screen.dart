@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kicksvibe/core/routes/app_routes.dart';
 import 'package:kicksvibe/core/widgets/custom_back_button.dart';
 import 'package:kicksvibe/core/widgets/custom_text_field.dart';
+import 'package:kicksvibe/core/widgets/cached_product_image.dart';
 import 'package:kicksvibe/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:kicksvibe/features/auth/presentation/widgets/auth_header.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -28,7 +30,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24.0),
@@ -38,24 +40,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               CustomBackButton(onTap: () => Navigator.pop(context)),
               const SizedBox(height: 32),
 
-              const Center(
-                child: Column(
-                  children: [
-                    Text(
-                      'Create Account',
-                      style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF1E2832),
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    Text(
-                      "Let's Create Account Together",
-                      style: TextStyle(fontSize: 16, color: Colors.grey),
-                    ),
-                  ],
-                ),
+              const AuthHeader(
+                title: 'Create Account',
+                subtitle: "Let's Create Account Together",
               ),
               const SizedBox(height: 40),
 
@@ -104,7 +91,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               );
                             },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF5A9AE5),
+                        backgroundColor: Theme.of(context).colorScheme.primary,
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14),
@@ -112,11 +99,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         elevation: 0,
                       ),
                       child: state is AuthLoading
-                          ? const CircularProgressIndicator(color: Colors.white)
-                          : const Text(
+                          ? CircularProgressIndicator(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                            )
+                          : Text(
                               'Sign Up',
                               style: TextStyle(
-                                color: Colors.white,
+                                color: Theme.of(context).colorScheme.onPrimary,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -133,20 +122,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   onPressed: () {
                     context.read<AuthCubit>().signInWithGoogle();
                   },
-                  icon: Image.network(
-                    'https://cdn-icons-png.flaticon.com/512/300/300221.png',
+                  icon: const CachedProductImage(
+                    imageUrl:
+                        'https://cdn-icons-png.flaticon.com/512/300/300221.png',
                     height: 24,
+                    width: 24,
                   ),
-                  label: const Text(
+                  label: Text(
                     'Sign in with google',
                     style: TextStyle(
-                      color: Colors.black87,
+                      color: Theme.of(context).colorScheme.onSurface,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
+                    backgroundColor: Theme.of(
+                      context,
+                    ).colorScheme.surfaceContainerHighest,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14),
@@ -162,14 +155,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: GestureDetector(
                   onTap: () => Navigator.pushNamed(context, AppRoutes.login),
                   child: RichText(
-                    text: const TextSpan(
-                      text: "Already Have An Account? ",
-                      style: TextStyle(color: Colors.grey, fontSize: 14),
+                    text: TextSpan(
+                      text: 'Already Have An Account? ',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        fontSize: 14,
+                      ),
                       children: [
                         TextSpan(
                           text: 'Sign In',
                           style: TextStyle(
-                            color: Colors.black87,
+                            color: Theme.of(context).colorScheme.onSurface,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

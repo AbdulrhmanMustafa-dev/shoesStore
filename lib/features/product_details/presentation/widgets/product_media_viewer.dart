@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kicksvibe/core/widgets/cached_product_image.dart';
-import 'package:kicksvibe/features/Home/data/models/product_model.dart';
+import 'package:kicksvibe/features/home/data/models/product_model.dart';
 import 'package:kicksvibe/features/product_details/presentation/cubit/product_details_cubit.dart';
 
 class ProductMediaViewer extends StatefulWidget {
@@ -53,10 +53,10 @@ class _ProductMediaViewerState extends State<ProductMediaViewer> {
                       onDrag: _handleDrag,
                     )
                   : widget.product.images.isEmpty
-                  ? const Icon(
+                  ? Icon(
                       Icons.broken_image,
                       size: 100,
-                      color: Colors.grey,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                     )
                   : _RegularImagePageView(
                       product: widget.product,
@@ -184,7 +184,9 @@ class _CurvedRotationSlider extends StatelessWidget {
               children: [
                 CustomPaint(
                   size: Size(width, height),
-                  painter: _CurvedLinePainter(),
+                  painter: _CurvedLinePainter(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                 ),
                 Positioned(
                   left: thumbX - 20,
@@ -193,27 +195,29 @@ class _CurvedRotationSlider extends StatelessWidget {
                     width: 40,
                     height: 24,
                     decoration: BoxDecoration(
-                      color: const Color(0xFF5A9AE5),
+                      color: Theme.of(context).colorScheme.primary,
                       borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xFF5A9AE5).withAlpha(102),
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.primary.withAlpha(102),
                           blurRadius: 4,
                           offset: const Offset(0, 2),
                         ),
                       ],
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
                           Icons.arrow_left_rounded,
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.onPrimary,
                           size: 18,
                         ),
                         Icon(
                           Icons.arrow_right_rounded,
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.onPrimary,
                           size: 18,
                         ),
                       ],
@@ -230,17 +234,21 @@ class _CurvedRotationSlider extends StatelessWidget {
 }
 
 class _CurvedLinePainter extends CustomPainter {
+  final Color color;
+
+  _CurvedLinePainter({required this.color});
+
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = const Color(0xFF5A9AE5).withAlpha(128)
+      ..color = color.withAlpha(128)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.5;
     final path = Path()
       ..moveTo(0, 0)
       ..quadraticBezierTo(size.width / 2, size.height, size.width, 0);
     canvas.drawPath(path, paint);
-    final dotPaint = Paint()..color = const Color(0xFF5A9AE5);
+    final dotPaint = Paint()..color = color;
     canvas.drawCircle(const Offset(0, 0), 2.5, dotPaint);
     canvas.drawCircle(Offset(size.width / 2, size.height / 2), 2.5, dotPaint);
     canvas.drawCircle(Offset(size.width, 0), 2.5, dotPaint);
