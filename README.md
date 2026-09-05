@@ -36,10 +36,10 @@ It features real-time backend integration, secure authentication, dynamic filter
   <table>
     <tr>
       <!-- قم بتعديل أسماء الصور هنا لتطابق الموجودة في مجلد mdImages -->
-      <td><img src="assets/mdImages/home.png" width="220" alt="Home Screen"></td>
-      <td><img src="assets/mdImages/search_filter.png" width="220" alt="Search and Filter"></td>
-      <td><img src="assets/mdImages/product_details.png" width="220" alt="Product Details"></td>
-      <td><img src="assets/mdImages/checkout.png" width="220" alt="Checkout"></td>
+      <td><img src="assets/mdImages/Home.png" width="220" alt="Home Screen"></td>
+      <td><img src="assets/mdImages/Search.png" width="220" alt="Search and Filter"></td>
+      <td><img src="assets/mdImages/Best Seller.png" width="220" alt="Product Details"></td>
+      <td><img src="assets/mdImages/Checkout.png" width="220" alt="Checkout"></td>
     </tr>
     <tr>
       <td align="center"><b>Home Screen & Shimmer</b></td>
@@ -48,10 +48,10 @@ It features real-time backend integration, secure authentication, dynamic filter
       <td align="center"><b>Checkout & Maps</b></td>
     </tr>
     <tr>
-      <td><img src="assets/mdImages/cart.png" width="220" alt="Cart Screen"></td>
-      <td><img src="assets/mdImages/favorites.png" width="220" alt="Favorites"></td>
+      <td><img src="assets/mdImages/My Cart.png" width="220" alt="Cart Screen"></td>
+      <td><img src="assets/mdImages/Favorites.png" width="220" alt="Favorites"></td>
       <td><img src="assets/mdImages/orders.png" width="220" alt="Orders History"></td>
-      <td><img src="assets/mdImages/profile.png" width="220" alt="Profile Settings"></td>
+      <td><img src="assets/mdImages/Profile.png" width="220" alt="Profile Settings"></td>
     </tr>
     <tr>
       <td align="center"><b>Cart Management</b></td>
