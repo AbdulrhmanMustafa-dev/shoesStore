@@ -10,7 +10,8 @@
 
 <br>
 
-![KicksVibe Banner](https://via.placeholder.com/1000x400/1E2832/FFFFFF?text=KicksVibe+App+Banner) *(Replace with your attractive banner image)*
+<!-- استبدل banner.png باسم صورة الغلاف الخاصة بك -->
+![KicksVibe Banner](assets/mdImages/banner.png)
 
 ## 📖 About The Project
 
@@ -34,20 +35,32 @@ It features real-time backend integration, secure authentication, dynamic filter
 <div align="center">
   <table>
     <tr>
-      <td><img src="https://via.placeholder.com/250x500/1E2832/FFFFFF?text=Home+Screen" alt="Home Screen"></td>
-      <td><img src="https://via.placeholder.com/250x500/1E2832/FFFFFF?text=Search+%26+Filter" alt="Search and Filter"></td>
-      <td><img src="https://via.placeholder.com/250x500/1E2832/FFFFFF?text=Product+Details" alt="Product Details"></td>
-      <td><img src="https://via.placeholder.com/250x500/1E2832/FFFFFF?text=Checkout+%26+Maps" alt="Checkout"></td>
+      <!-- قم بتعديل أسماء الصور هنا لتطابق الموجودة في مجلد mdImages -->
+      <td><img src="assets/mdImages/home.png" width="220" alt="Home Screen"></td>
+      <td><img src="assets/mdImages/search_filter.png" width="220" alt="Search and Filter"></td>
+      <td><img src="assets/mdImages/product_details.png" width="220" alt="Product Details"></td>
+      <td><img src="assets/mdImages/checkout.png" width="220" alt="Checkout"></td>
     </tr>
     <tr>
-      <td align="center"><b>Home Screen</b></td>
+      <td align="center"><b>Home Screen & Shimmer</b></td>
       <td align="center"><b>Search & Filters</b></td>
       <td align="center"><b>Product Details (3D)</b></td>
       <td align="center"><b>Checkout & Maps</b></td>
     </tr>
+    <tr>
+      <td><img src="assets/mdImages/cart.png" width="220" alt="Cart Screen"></td>
+      <td><img src="assets/mdImages/favorites.png" width="220" alt="Favorites"></td>
+      <td><img src="assets/mdImages/orders.png" width="220" alt="Orders History"></td>
+      <td><img src="assets/mdImages/profile.png" width="220" alt="Profile Settings"></td>
+    </tr>
+    <tr>
+      <td align="center"><b>Cart Management</b></td>
+      <td align="center"><b>Favorites Cache</b></td>
+      <td align="center"><b>Orders History</b></td>
+      <td align="center"><b>Localization & Dark Mode</b></td>
+    </tr>
   </table>
 </div>
-*(Upload your actual screenshots to a `docs` folder and link them here)*
 
 ## 🛠 Tech Stack & Architecture
 
