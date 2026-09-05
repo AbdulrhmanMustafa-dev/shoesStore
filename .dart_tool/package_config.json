@@ -188,6 +188,12 @@
       "languageVersion": "3.9"
     },
     {
+      "name": "cupertino_ui",
+      "rootUri": "file:///home/abdulrhman/.pub-cache/hosted/pub.dev/cupertino_ui-1.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.12"
+    },
+    {
       "name": "dart_earcut",
       "rootUri": "file:///home/abdulrhman/.pub-cache/hosted/pub.dev/dart_earcut-1.2.0",
       "packageUri": "lib/",
@@ -692,6 +698,12 @@
       "languageVersion": "3.5"
     },
     {
+      "name": "material_ui",
+      "rootUri": "file:///home/abdulrhman/.pub-cache/hosted/pub.dev/material_ui-1.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.12"
+    },
+    {
       "name": "meta",
       "rootUri": "file:///home/abdulrhman/.pub-cache/hosted/pub.dev/meta-1.19.0",
       "packageUri": "lib/",
@@ -912,6 +924,12 @@
       "rootUri": "file:///home/abdulrhman/.pub-cache/hosted/pub.dev/shelf_web_socket-3.0.0",
       "packageUri": "lib/",
       "languageVersion": "3.5"
+    },
+    {
+      "name": "shimmer",
+      "rootUri": "file:///home/abdulrhman/.pub-cache/hosted/pub.dev/shimmer-4.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.12"
     },
     {
       "name": "simple_sparse_list",

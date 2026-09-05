@@ -29,6 +29,7 @@
         "injectable",
         "latlong2",
         "shared_preferences",
+        "shimmer",
         "webview_flutter"
       ],
       "devDependencies": [
@@ -182,6 +183,14 @@
         "injectable",
         "meta",
         "path"
+      ]
+    },
+    {
+      "name": "shimmer",
+      "version": "4.0.0",
+      "dependencies": [
+        "flutter",
+        "material_ui"
       ]
     },
     {
@@ -1817,6 +1826,29 @@
         "collection",
         "meta",
         "pub_semver"
+      ]
+    },
+    {
+      "name": "material_ui",
+      "version": "1.1.1",
+      "dependencies": [
+        "collection",
+        "cupertino_ui",
+        "flutter",
+        "flutter_localizations",
+        "intl",
+        "material_color_utilities",
+        "vector_math"
+      ]
+    },
+    {
+      "name": "cupertino_ui",
+      "version": "1.0.2",
+      "dependencies": [
+        "collection",
+        "flutter",
+        "flutter_localizations",
+        "intl"
       ]
     }
   ],
