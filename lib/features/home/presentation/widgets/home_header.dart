@@ -43,7 +43,7 @@ class HomeHeader extends StatelessWidget {
                   size: 16,
                 ),
                 SizedBox(width: 4),
-                Text(
+                const Text(
                   'Sadat City, Egypt',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),

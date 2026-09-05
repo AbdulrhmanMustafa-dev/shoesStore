@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kicksvibe/core/localization/app_localizations.dart';
 import 'package:kicksvibe/core/routes/app_routes.dart';
 import 'package:kicksvibe/core/widgets/custom_back_button.dart';
 import 'package:kicksvibe/core/widgets/cached_product_image.dart';
@@ -23,7 +24,7 @@ class FavoriteScreen extends StatelessWidget {
                 children: [
                   CustomBackButton(onTap: () => Navigator.pop(context)),
                   Text(
-                    'Favourite',
+                    context.l10n.favorites,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -77,7 +78,7 @@ class FavoriteScreen extends StatelessWidget {
                   if (state.favoriteProducts.isEmpty) {
                     return Center(
                       child: Text(
-                        'No Favorite Shoes Yet!',
+                        context.l10n.noFavorites,
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onSurfaceVariant,
                           fontSize: 16,

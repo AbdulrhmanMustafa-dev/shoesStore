@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kicksvibe/core/localization/app_localizations.dart';
 import 'package:kicksvibe/features/home/presentation/cubit/home_cubit.dart';
 import 'package:kicksvibe/features/home/presentation/widgets/shoe_card.dart';
 
@@ -21,9 +22,7 @@ class PopularShoesList extends StatelessWidget {
 
           if (state is HomeLoaded) {
             if (state.popularProducts.isEmpty) {
-              return const Center(
-                child: Text('لا توجد منتجات شائعة لهذه الماركة.'),
-              );
+              return Center(child: Text(context.l10n.noPopularProducts));
             }
             return ListView.builder(
               scrollDirection: Axis.horizontal,

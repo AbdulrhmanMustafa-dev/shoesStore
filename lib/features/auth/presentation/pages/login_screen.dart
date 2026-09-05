@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kicksvibe/core/localization/app_localizations.dart';
 import 'package:kicksvibe/core/routes/app_routes.dart';
 import 'package:kicksvibe/core/widgets/custom_text_field.dart';
 import 'package:kicksvibe/core/widgets/cached_product_image.dart';
@@ -34,22 +35,22 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 40),
-              const AuthHeader(
-                title: 'Hello Again!',
-                subtitle: "Welcome Back You've Been Missed!",
+              AuthHeader(
+                title: context.l10n.helloAgain,
+                subtitle: context.l10n.welcomeBack,
               ),
               const SizedBox(height: 48),
 
               // Input Fields
               CustomTextField(
-                label: 'Email Address',
+                label: context.l10n.emailAddress,
                 hint: 'alissonbecker@gmail.com',
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 24),
               CustomTextField(
-                label: 'Password',
+                label: context.l10n.password,
                 hint: '••••••••',
                 isPassword: true,
                 controller: passwordController,
@@ -61,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () =>
                       Navigator.pushNamed(context, AppRoutes.recoveryPassword),
                   child: Text(
-                    'Recovery Password',
+                    context.l10n.recoveryPassword,
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
                       fontSize: 14,
@@ -97,9 +98,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               );
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
+                                SnackBar(
                                   content: Text(
-                                    'Please enter email and password',
+                                    context.l10n.pleaseEnterEmailPassword,
                                   ),
                                 ),
                               );
@@ -114,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               strokeWidth: 2,
                             ),
                           )
-                        : const Text('Sign In'),
+                        : Text(context.l10n.signIn),
                   );
                 },
               ),
@@ -132,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: 24,
                 ),
                 label: Text(
-                  'Sign in with Google',
+                  context.l10n.signInWithGoogle,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onSurface,
                     fontSize: 16,
@@ -161,14 +162,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   child: RichText(
                     text: TextSpan(
-                      text: "Don't Have An Account? ",
+                      text: context.l10n.noAccount,
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
                         fontSize: 14,
                       ),
                       children: [
                         TextSpan(
-                          text: 'Sign Up For Free',
+                          text: context.l10n.signUpForFree,
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.onSurface,
                             fontWeight: FontWeight.bold,

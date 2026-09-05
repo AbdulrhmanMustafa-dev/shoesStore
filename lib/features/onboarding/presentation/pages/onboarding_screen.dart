@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kicksvibe/core/localization/app_localizations.dart';
 import 'package:kicksvibe/core/di/injection.dart';
 import 'package:kicksvibe/core/routes/app_routes.dart';
 import 'package:kicksvibe/features/onboarding/presentation/models/onboarding_model.dart';
@@ -23,21 +24,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     _pageController = PageController(); // تهيئة
   }
 
-  final List<OnboardingModel> screens = [
+  List<OnboardingModel> _screens(BuildContext context) => [
     OnboardingModel(
       image: 'assets/images/onBoarding_1.png', // تأكد من إضافة مسار صورك
-      title: 'Start Journey\nWith Nike',
-      body: 'Smart, Gorgeous & Fashionable\nCollection',
+      title: context.l10n.onboardingTitle1,
+      body: context.l10n.onboardingBody1,
     ),
     OnboardingModel(
       image: 'assets/images/onboarding_2.png',
-      title: 'Follow Latest\nStyle Shoes',
-      body: 'There Are Many Beautiful And\nAttractive Plants To Your Room',
+      title: context.l10n.onboardingTitle2,
+      body: context.l10n.onboardingBody2,
     ),
     OnboardingModel(
       image: 'assets/images/onboarding_3.png',
-      title: 'Summer Shoes\nNike 2022',
-      body: 'Amet Minim Lit Nodeseru Saku\nNandu sit Alique Dolor',
+      title: context.l10n.onboardingTitle3,
+      body: context.l10n.onboardingBody3,
     ),
   ];
 
@@ -53,6 +54,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             padding: const EdgeInsets.all(24.0),
             child: BlocBuilder<OnboardingCubit, int>(
               builder: (context, currentIndex) {
+                final screens = _screens(context);
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -147,8 +149,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           ),
                           child: Text(
                             currentIndex == screens.length - 1
-                                ? 'Get Started'
-                                : 'Next',
+                                ? context.l10n.getStarted
+                                : context.l10n.next,
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.onPrimary,
                               fontSize: 16,

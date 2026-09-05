@@ -30,29 +30,6 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<String> signUp({
-    required String name,
-    required String email,
-    required String password,
-  }) async {
-    try {
-      final credential = await _auth.createUserWithEmailAndPassword(
-        email: email.trim(),
-        password: password,
-      );
-      final user = credential.user;
-      if (user == null) {
-        throw const AuthException('Could not create the account.');
-      }
-      await user.updateDisplayName(name.trim());
-      await _cacheHelper.saveIsSignedIn(value: true);
-      return user.uid;
-    } on FirebaseAuthException catch (exception) {
-      throw AuthException(_firebaseMessage(exception));
-    }
-  }
-
-  @override
   Future<void> sendPasswordResetEmail(String email) async {
     try {
       await _auth.sendPasswordResetEmail(email: email.trim());
@@ -104,6 +81,37 @@ class AuthRepositoryImpl implements AuthRepository {
     }
     await _cacheHelper.saveIsSignedIn(value: true);
     return user.uid;
+  }
+
+  @override
+  Future<String> signUp({
+    required String name,
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final credential = await _auth.createUserWithEmailAndPassword(
+        email: email.trim(),
+        password: password,
+      );
+      final user = credential.user;
+
+      if (user == null) {
+        throw const AuthException('Could not create the account.');
+      }
+
+      await user.updateDisplayName(name.trim());
+
+      // 💡 السطر الجديد: إرسال رابط التفعيل للإيميل
+      if (!user.emailVerified) {
+        await user.sendEmailVerification();
+      }
+
+      await _cacheHelper.saveIsSignedIn(value: true);
+      return user.uid;
+    } on FirebaseAuthException catch (exception) {
+      throw AuthException(_firebaseMessage(exception));
+    }
   }
 
   String _firebaseMessage(FirebaseAuthException exception) {

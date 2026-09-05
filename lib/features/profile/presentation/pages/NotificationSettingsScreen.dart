@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kicksvibe/core/localization/app_localizations.dart';
 import 'package:kicksvibe/core/widgets/custom_back_button.dart';
 import 'package:kicksvibe/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:kicksvibe/features/profile/presentation/widgets/notification_toggle.dart';
@@ -21,7 +22,7 @@ class NotificationSettingsScreen extends StatelessWidget {
                   CustomBackButton(onTap: () => Navigator.pop(context)),
                   Expanded(
                     child: Text(
-                      'Notification Setting',
+                      context.l10n.notificationSetting,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 18,
@@ -43,17 +44,17 @@ class NotificationSettingsScreen extends StatelessWidget {
                     return Column(
                       children: [
                         NotificationToggle(
-                          title: 'General Notification',
+                          title: context.l10n.generalNotification,
                           value: state.isGeneralNotificationEnabled,
                           onChanged: cubit.toggleGeneralNotification,
                         ),
                         NotificationToggle(
-                          title: 'Sound',
+                          title: context.l10n.sound,
                           value: state.isSoundEnabled,
                           onChanged: cubit.toggleSound,
                         ),
                         NotificationToggle(
-                          title: 'Vibrate',
+                          title: context.l10n.vibrate,
                           value: state.isVibrateEnabled,
                           onChanged: cubit.toggleVibrate,
                         ),
@@ -65,17 +66,17 @@ class NotificationSettingsScreen extends StatelessWidget {
                           ),
                         ),
                         NotificationToggle(
-                          title: 'Special Offers',
+                          title: context.l10n.specialOffers,
                           value: state.isSpecialOffersEnabled,
                           onChanged: cubit.toggleSpecialOffers,
                         ),
                         NotificationToggle(
-                          title: 'Promo & Discount',
+                          title: context.l10n.promoDiscount,
                           value: state.isPromoDiscountEnabled,
                           onChanged: cubit.togglePromoDiscount,
                         ),
                         NotificationToggle(
-                          title: 'Payments',
+                          title: context.l10n.payments,
                           value: state.isPaymentsEnabled,
                           onChanged: cubit.togglePaymentsNotification,
                         ),

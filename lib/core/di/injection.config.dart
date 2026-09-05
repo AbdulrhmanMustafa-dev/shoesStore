@@ -42,6 +42,8 @@ import 'package:kicksvibe/features/home/domain/repositories/home_repository.dart
     as _i869;
 import 'package:kicksvibe/features/home/presentation/cubit/home_cubit.dart'
     as _i147;
+import 'package:kicksvibe/features/home/presentation/cubit/search_cubit.dart'
+    as _i718;
 import 'package:kicksvibe/features/notifications/data/repositories/NotificationsRepositoryImpl.dart'
     as _i817;
 import 'package:kicksvibe/features/notifications/presentation/cubit/notifications_cubit.dart'
@@ -114,6 +116,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i59.FirebaseAuth>(),
         gh<_i116.GoogleSignIn>(),
         gh<_i708.CacheHelper>(),
+      ),
+    );
+    gh.factory<_i718.SearchCubit>(
+      () => _i718.SearchCubit(
+        gh<_i708.CacheHelper>(),
+        gh<_i869.HomeRepository>(),
       ),
     );
     gh.factory<_i147.HomeCubit>(

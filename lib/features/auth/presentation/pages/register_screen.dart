@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kicksvibe/core/localization/app_localizations.dart';
 import 'package:kicksvibe/core/routes/app_routes.dart';
 import 'package:kicksvibe/core/widgets/custom_back_button.dart';
 import 'package:kicksvibe/core/widgets/custom_text_field.dart';
@@ -15,6 +16,8 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  // مفتاح التحكم في النموذج (Form)
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -39,42 +42,79 @@ class _RegisterScreenState extends State<RegisterScreen> {
             children: [
               CustomBackButton(onTap: () => Navigator.pop(context)),
               const SizedBox(height: 32),
-
-              const AuthHeader(
-                title: 'Create Account',
-                subtitle: "Let's Create Account Together",
+              AuthHeader(
+                title: context.l10n.createAccount,
+                subtitle: context.l10n.createAccountTogether,
               ),
               const SizedBox(height: 40),
 
-              CustomTextField(
-                label: 'Your Name',
-                hint: 'Alisson Becker',
-                controller: nameController,
-              ),
-              const SizedBox(height: 24),
-              CustomTextField(
-                label: 'Email Address',
-                hint: 'alissonbecker@gmail.com',
-                controller: emailController,
-              ),
-              const SizedBox(height: 24),
-              CustomTextField(
-                label: 'Password',
-                hint: '••••••••',
-                isPassword: true,
-                controller: passwordController,
+              // تغليف الحقول بـ Form لتفعيل التحقق
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    CustomTextField(
+                      label: context.l10n.yourName,
+                      hint: 'Alisson Becker',
+                      controller: nameController,
+                      validator: (value) =>
+                          value == null || value.trim().isEmpty
+                          ? 'Please enter your name'
+                          : null,
+                    ),
+                    const SizedBox(height: 24),
+                    CustomTextField(
+                      label: context.l10n.emailAddress,
+                      hint: 'alissonbecker@gmail.com',
+                      controller: emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty)
+                          return 'Please enter your email';
+                        if (!RegExp(
+                          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                        ).hasMatch(value)) {
+                          return 'Please enter a valid email address';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 24),
+                    CustomTextField(
+                      label: context.l10n.password,
+                      hint: '********',
+                      isPassword: true,
+                      controller: passwordController,
+                      validator: (value) => value != null && value.length < 6
+                          ? 'Password must be at least 6 characters'
+                          : null,
+                    ),
+                  ],
+                ),
               ),
 
               const SizedBox(height: 40),
-
               BlocConsumer<AuthCubit, AuthState>(
                 listener: (context, state) {
                   if (state is AuthSuccess) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Account created! Please check your email to verify.',
+                        ),
+                        backgroundColor: Theme.of(
+                          context,
+                        ).colorScheme.secondary,
+                      ),
+                    );
                     Navigator.pushReplacementNamed(context, AppRoutes.home);
                   } else if (state is AuthFailure) {
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(SnackBar(content: Text(state.errorMessage)));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(state.errorMessage),
+                        backgroundColor: Theme.of(context).colorScheme.error,
+                      ),
+                    );
                   }
                 },
                 builder: (context, state) {
@@ -84,11 +124,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       onPressed: state is AuthLoading
                           ? null
                           : () {
-                              context.read<AuthCubit>().signUp(
-                                name: nameController.text,
-                                email: emailController.text,
-                                password: passwordController.text,
-                              );
+                              // التحقق المتقدم قبل إرسال البيانات
+                              if (_formKey.currentState!.validate()) {
+                                context.read<AuthCubit>().signUp(
+                                  name: nameController.text,
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                );
+                              }
                             },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -99,8 +142,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         elevation: 0,
                       ),
                       child: state is AuthLoading
-                          ? CircularProgressIndicator(
-                              color: Theme.of(context).colorScheme.onPrimary,
+                          ? SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(
+                                color: Theme.of(context).colorScheme.onPrimary,
+                                strokeWidth: 2,
+                              ),
                             )
                           : Text(
                               'Sign Up',
@@ -115,7 +163,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 },
               ),
               const SizedBox(height: 16),
-
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
@@ -129,7 +176,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     width: 24,
                   ),
                   label: Text(
-                    'Sign in with google',
+                    'Sign in with Google',
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.onSurface,
                       fontSize: 16,
@@ -148,9 +195,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
               ),
-
               const SizedBox(height: 40),
-
               Center(
                 child: GestureDetector(
                   onTap: () => Navigator.pushNamed(context, AppRoutes.login),

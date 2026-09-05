@@ -1,5 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kicksvibe/core/utils/cache_helper.dart';
 
@@ -16,6 +17,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   void _loadSettings() {
     emit(
       ProfileState(
+        locale: Locale(_cacheHelper.getString('locale') ?? 'en'),
         isFaceIdEnabled: _cacheHelper.getBool('face_id', defaultValue: false),
         isPushNotificationsEnabled: _cacheHelper.getBool(
           'push_notifications',
@@ -51,6 +53,11 @@ class ProfileCubit extends Cubit<ProfileState> {
         ),
       ),
     );
+  }
+
+  Future<void> setLocale(Locale locale) async {
+    await _cacheHelper.setString('locale', locale.languageCode);
+    if (!isClosed) emit(state.copyWith(locale: locale));
   }
 
   // الدوال السابقة...

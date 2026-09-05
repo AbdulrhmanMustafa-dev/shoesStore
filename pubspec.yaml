@@ -1,14 +1,16 @@
 name: kicksvibe
 description: "KicksVibe - A modern e-commerce application for shoes built with Flutter and Firebase."
-publish_to: "none" 
+publish_to: "none"
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.12.2 <4.0.0'
+  sdk: ">=3.12.2 <4.0.0"
 
 dependencies:
   flutter:
+    sdk: flutter
+  flutter_localizations:
     sdk: flutter
   cupertino_icons: 1.0.9
   equatable: ^2.1.0
@@ -48,8 +50,8 @@ flutter:
     - assets/images/
 
 flutter_native_splash:
-  color: "#FFFFFF" 
-  image: assets/images/logo.png 
+  color: "#FFFFFF"
+  image: assets/images/logo.png
   android_12:
     image: assets/images/logo.png
     icon_background_color: "#FFFFFF"

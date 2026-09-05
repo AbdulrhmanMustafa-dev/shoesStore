@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kicksvibe/core/localization/app_localizations.dart';
 import 'package:kicksvibe/core/di/injection.dart';
 import 'package:kicksvibe/core/routes/app_routes.dart';
 import 'package:kicksvibe/core/utils/AppTest.dart';
@@ -27,7 +28,7 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
- final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
 
   @override
   void dispose() {
@@ -35,6 +36,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         .dispose(); // 💡 2. تدميره عند الخروج من شاشة الـ Checkout بالكامل
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
@@ -50,7 +52,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 children: [
                   CustomBackButton(onTap: () => Navigator.pop(context)),
                   Text(
-                    'Checkout',
+                    context.l10n.checkout,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -69,19 +71,19 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   children: [
                     BlocBuilder<CheckoutCubit, CheckoutState>(
                       builder: (context, state) => CheckoutSectionContainer(
-                        title: 'Contact Information',
+                        title: context.l10n.contactInformation,
                         child: Column(
                           children: [
                             ContactInfoRow(
                               icon: Icons.email_outlined,
                               title: state.email,
-                              subtitle: 'Email',
+                              subtitle: context.l10n.emailAddress,
                             ),
                             const SizedBox(height: 16),
                             ContactInfoRow(
                               icon: Icons.phone_outlined,
                               title: state.phone,
-                              subtitle: 'Phone',
+                              subtitle: context.l10n.phone,
                               onEdit: () =>
                                   _showEditPhoneDialog(context, state.phone),
                             ),
@@ -91,7 +93,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     ),
                     const SizedBox(height: 24),
                     CheckoutSectionContainer(
-                      title: 'Address',
+                      title: context.l10n.address,
                       child: BlocConsumer<CheckoutCubit, CheckoutState>(
                         listenWhen: (previous, current) =>
                             previous.errorMessage != current.errorMessage,
@@ -118,7 +120,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     ),
                     const SizedBox(height: 24),
                     CheckoutSectionContainer(
-                      title: 'Payment Method',
+                      title: context.l10n.paymentMethod,
                       child: BlocBuilder<CheckoutCubit, CheckoutState>(
                         builder: (context, state) => PaymentMethodSelector(
                           selectedMethod: state.paymentMethod,
@@ -141,31 +143,30 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 
-  void _showEditPhoneDialog(
-    BuildContext context,
-    String currentPhone,
-  ) {
+  void _showEditPhoneDialog(BuildContext context, String currentPhone) {
     // 💡 3. تعيين النص قبل فتح الديالوج
-    _phoneController.text = currentPhone == 'Add your phone number' ? '' : currentPhone;
-    
+    _phoneController.text = currentPhone == 'Add your phone number'
+        ? ''
+        : currentPhone;
+
     final checkoutCubit = context.read<CheckoutCubit>();
 
     showDialog(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('Edit Phone Number'),
+        title: Text(context.l10n.editPhoneNumber),
         content: TextField(
           controller: _phoneController, // 💡 4. استخدام الـ Controller المحفوظ
           keyboardType: TextInputType.phone,
-          decoration: const InputDecoration(
-            hintText: 'Enter phone number',
+          decoration: InputDecoration(
+            hintText: context.l10n.enterPhoneNumber,
             border: OutlineInputBorder(),
           ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('Cancel'),
+            child: Text(context.l10n.cancel),
           ),
           ElevatedButton(
             onPressed: () {
@@ -173,7 +174,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               Navigator.pop(dialogContext);
             },
             child: Text(
-              'Save',
+              context.l10n.save,
               style: TextStyle(
                 color: Theme.of(dialogContext).colorScheme.onPrimary,
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kicksvibe/core/localization/app_localizations.dart';
 import 'package:kicksvibe/core/widgets/custom_back_button.dart';
 import 'package:kicksvibe/features/orders/data/models/order_model.dart';
 import 'package:kicksvibe/features/orders/presentation/widgets/order_status_header.dart';
@@ -152,8 +153,8 @@ class OrderDetailsScreen extends StatelessWidget {
                     const SizedBox(height: 24),
 
                     // Shipping & Payment Info
-                    const Text(
-                      'Summary',
+                    Text(
+                      context.l10n.summary,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -170,20 +171,20 @@ class OrderDetailsScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           OrderSummaryRow(
-                            title: 'Payment Method',
+                            title: context.l10n.paymentMethod,
                             value: order.paymentMethod,
                           ),
                           const Divider(),
                           OrderSummaryRow(
-                            title: 'Address',
+                            title: context.l10n.address,
                             value: order.address,
                           ),
                           const Divider(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
-                                'Total',
+                              Text(
+                                context.l10n.total,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,

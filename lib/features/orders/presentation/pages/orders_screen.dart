@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kicksvibe/core/localization/app_localizations.dart';
 import 'package:kicksvibe/core/routes/app_routes.dart';
 import 'package:kicksvibe/core/widgets/custom_back_button.dart';
 import 'package:kicksvibe/features/orders/presentation/cubit/orders_cubit.dart';
@@ -23,7 +24,7 @@ class OrdersScreen extends StatelessWidget {
                 children: [
                   CustomBackButton(onTap: () => Navigator.pop(context)),
                   Text(
-                    'My Orders',
+                    context.l10n.orders,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -55,7 +56,7 @@ class OrdersScreen extends StatelessWidget {
                     if (state.orders.isEmpty) {
                       return Center(
                         child: Text(
-                          'No orders yet!',
+                          context.l10n.noOrders,
                           style: TextStyle(
                             color: Theme.of(
                               context,

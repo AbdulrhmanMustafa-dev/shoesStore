@@ -7,6 +7,7 @@ import 'package:kicksvibe/features/home/presentation/cubit/home_cubit.dart';
 import 'package:kicksvibe/features/home/presentation/pages/best_sellers_screen.dart';
 import 'package:kicksvibe/features/home/presentation/pages/home_screen.dart';
 import 'package:kicksvibe/features/home/presentation/pages/main_layout.dart';
+import 'package:kicksvibe/features/home/presentation/pages/search_screen.dart';
 import 'package:kicksvibe/features/notifications/presentation/cubit/notifications_cubit.dart';
 import 'package:kicksvibe/features/notifications/presentation/pages/notifications_screen.dart';
 import 'package:kicksvibe/features/onboarding/presentation/pages/onboarding_screen.dart';
@@ -130,6 +131,15 @@ class AppRouter {
             child: const PaymentInfoScreen(),
           ),
         );
+
+      case AppRoutes.search:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => getIt<HomeCubit>(),
+            child: const SearchScreen(),
+          ),
+        );
+
       default:
         return _errorRoute('No route defined for ${settings.name}');
     }

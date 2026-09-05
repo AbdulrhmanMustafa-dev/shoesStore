@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kicksvibe/core/localization/app_localizations.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class PaymentWebViewScreen extends StatefulWidget {
@@ -42,7 +43,7 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Secure payment')),
+      appBar: AppBar(title: Text(context.l10n.securePayment)),
       body: Stack(
         children: [
           WebViewWidget(controller: _controller),

@@ -18,4 +18,5 @@ class AppRoutes {
   static const String notificationSettings = '/notification_settings';
   static const String shippingAddress = '/shipping_address';
   static const String paymentInfo = '/payment_info';
+  static const String search = '/search';
 }

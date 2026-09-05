@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kicksvibe/core/localization/app_localizations.dart';
 import 'package:kicksvibe/core/widgets/cached_product_image.dart';
 import 'package:kicksvibe/features/home/presentation/cubit/home_cubit.dart';
 
@@ -12,9 +13,7 @@ class NewArrivalsCard extends StatelessWidget {
       builder: (context, state) {
         if (state is HomeLoaded) {
           if (state.newArrivalProducts.isEmpty) {
-            return const Center(
-              child: Text('لا توجد منتجات حديثة لهذه الماركة.'),
-            );
+            return Center(child: Text(context.l10n.noNewProducts));
           }
 
           return ListView.builder(

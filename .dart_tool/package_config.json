@@ -350,6 +350,12 @@
       "languageVersion": "3.8"
     },
     {
+      "name": "flutter_localizations",
+      "rootUri": "file:///opt/flutter/packages/flutter_localizations",
+      "packageUri": "lib/",
+      "languageVersion": "3.11"
+    },
+    {
       "name": "flutter_map",
       "rootUri": "file:///home/abdulrhman/.pub-cache/hosted/pub.dev/flutter_map-8.3.1",
       "packageUri": "lib/",

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:kicksvibe/core/localization/app_localizations.dart';
 import 'package:kicksvibe/core/widgets/custom_back_button.dart';
 import 'package:kicksvibe/core/widgets/custom_text_field.dart';
 
@@ -60,7 +61,7 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
           setState(() => isEditing = false);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Profile updated successfully!'),
+              content: Text(context.l10n.profileUpdated),
               backgroundColor: Theme.of(context).colorScheme.secondary,
             ),
           );

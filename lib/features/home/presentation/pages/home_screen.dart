@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kicksvibe/core/localization/app_localizations.dart';
 import 'package:kicksvibe/core/routes/app_routes.dart';
 import 'package:kicksvibe/features/home/data/models/product_model.dart';
 import 'package:kicksvibe/features/home/presentation/cubit/home_cubit.dart';
@@ -124,7 +125,7 @@ class HomeScreen extends StatelessWidget {
                     return Column(
                       children: [
                         SectionTitle(
-                          title: 'Popular Shoes',
+                          title: context.l10n.popularShoes,
                           onTap: () {
                             if (popular.isNotEmpty) {
                               Navigator.pushNamed(
@@ -142,7 +143,7 @@ class HomeScreen extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: 24),
-                SectionTitle(title: 'New Arrivals', onTap: () {}),
+                SectionTitle(title: context.l10n.newArrivals, onTap: () {}),
                 const SizedBox(height: 16),
                 const NewArrivalsCard(),
               ],

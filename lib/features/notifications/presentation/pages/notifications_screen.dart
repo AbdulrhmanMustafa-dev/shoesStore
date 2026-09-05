@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kicksvibe/core/localization/app_localizations.dart';
 import 'package:hive_ce/hive.dart';
 import 'package:kicksvibe/core/routes/app_routes.dart';
 import 'package:kicksvibe/core/widgets/custom_back_button.dart';
@@ -26,7 +27,7 @@ class NotificationsScreen extends StatelessWidget {
                 children: [
                   CustomBackButton(onTap: () => Navigator.pop(context)),
                   Text(
-                    'Notifications',
+                    context.l10n.notifications,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -38,7 +39,7 @@ class NotificationsScreen extends StatelessWidget {
                       // TODO: Implement Clear All Logic
                     },
                     child: Text(
-                      'Clear All',
+                      context.l10n.clearAll,
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.bold,
@@ -73,7 +74,7 @@ class NotificationsScreen extends StatelessWidget {
                     if (state.notifications.isEmpty) {
                       return Center(
                         child: Text(
-                          'No Notifications Yet!',
+                          context.l10n.noNotifications,
                           style: TextStyle(
                             color: Theme.of(
                               context,

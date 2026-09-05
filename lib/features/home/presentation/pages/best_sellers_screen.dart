@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kicksvibe/core/routes/app_routes.dart';
 import 'package:kicksvibe/core/widgets/custom_back_button.dart';
 import 'package:kicksvibe/features/home/data/models/product_model.dart';
+import 'package:kicksvibe/features/home/presentation/widgets/filter_bottom_sheet.dart';
 import 'package:kicksvibe/features/home/presentation/widgets/shoe_card.dart';
 
 class BestSellersScreen extends StatelessWidget {
@@ -34,7 +35,15 @@ class BestSellersScreen extends StatelessWidget {
                   Row(
                     children: [
                       GestureDetector(
-                        onTap: () {}, // Filter Action
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true, // لتجنب مشاكل الحجم
+                            backgroundColor: Colors
+                                .transparent, // لجعل الحواف العلوية تظهر بشكل دائري
+                            builder: (context) => const FilterBottomSheet(),
+                          );
+                        }, // Filter Action
                         child: Icon(
                           Icons.tune_rounded,
                           color: Theme.of(context).colorScheme.onSurface,
@@ -42,7 +51,9 @@ class BestSellersScreen extends StatelessWidget {
                       ),
                       const SizedBox(width: 16),
                       GestureDetector(
-                        onTap: () {}, // Search Action
+                        onTap: () {
+                          Navigator.pushNamed(context, AppRoutes.search);
+                        }, // Search Action
                         child: Icon(
                           Icons.search_rounded,
                           color: Theme.of(context).colorScheme.onSurface,

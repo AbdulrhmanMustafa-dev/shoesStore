@@ -1,6 +1,7 @@
 part of 'profile_cubit.dart';
 
 class ProfileState {
+  final Locale locale;
   final bool isFaceIdEnabled;
   final bool isPushNotificationsEnabled;
   final bool isLocationEnabled;
@@ -15,6 +16,7 @@ class ProfileState {
   final bool isPaymentsEnabled;
 
   ProfileState({
+    this.locale = const Locale('en'),
     this.isFaceIdEnabled = false,
     this.isPushNotificationsEnabled = true,
     this.isLocationEnabled = true,
@@ -28,6 +30,7 @@ class ProfileState {
   });
 
   ProfileState copyWith({
+    Locale? locale,
     bool? isFaceIdEnabled,
     bool? isPushNotificationsEnabled,
     bool? isLocationEnabled,
@@ -40,6 +43,7 @@ class ProfileState {
     bool? isPaymentsEnabled,
   }) {
     return ProfileState(
+      locale: locale ?? this.locale,
       isFaceIdEnabled: isFaceIdEnabled ?? this.isFaceIdEnabled,
       isPushNotificationsEnabled:
           isPushNotificationsEnabled ?? this.isPushNotificationsEnabled,

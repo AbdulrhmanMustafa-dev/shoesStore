@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kicksvibe/core/localization/app_localizations.dart';
 import 'package:kicksvibe/core/widgets/custom_back_button.dart';
 import 'package:kicksvibe/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:kicksvibe/features/cart/presentation/widgets/cart_item_card.dart';
@@ -23,7 +24,7 @@ class CartScreen extends StatelessWidget {
                 children: [
                   CustomBackButton(onTap: () => Navigator.pop(context)),
                   Text(
-                    'My Cart',
+                    context.l10n.cart,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -40,7 +41,7 @@ class CartScreen extends StatelessWidget {
                   if (state.cartItems.isEmpty) {
                     return Center(
                       child: Text(
-                        'Your Cart is Empty',
+                        context.l10n.cartEmpty,
                         style: TextStyle(
                           color: colors.onSurfaceVariant,
                           fontSize: 16,

@@ -53,6 +53,15 @@ class CacheHelper {
     return _prefs.getDouble(key);
   }
 
+  // إضافة هذه الدوال داخل كلاس CacheHelper
+  Future<bool> setStringList(String key, List<String> value) async {
+    return _prefs.setStringList(key, value);
+  }
+
+  List<String> getStringList(String key) {
+    return _prefs.getStringList(key) ?? [];
+  }
+
   Future<void> saveLastCheckoutAddress({
     required String address,
     required double latitude,
