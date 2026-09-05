@@ -1,7 +1,7 @@
 # KicksVibe
 
 <div align="center">
-  <img src="assets/mdImages/Home.png" alt="KicksVibe home screen" width="220" />
+  <!--  -->
   <h3>A modern Flutter storefront for discovering and buying sneakers</h3>
   <p>
     KicksVibe combines a polished shopping experience with Firebase services,
@@ -13,6 +13,7 @@
     <img src="https://img.shields.io/badge/Dart-3.12.2%2B-0175C2?style=flat-square&logo=dart&logoColor=white" alt="Dart 3.12.2 or newer" />
     <img src="https://img.shields.io/badge/Firebase-integrated-FFCA28?style=flat-square&logo=firebase&logoColor=111827" alt="Firebase integrated" />
     <img src="https://img.shields.io/badge/Architecture-Clean-111827?style=flat-square" alt="Clean Architecture" />
+    <img src="https://img.shields.io/badge/License-All%20Rights%20Reserved-red?style=flat-square" alt="All Rights Reserved" />
   </p>
 </div>
 
@@ -40,15 +41,33 @@ location-aware checkout, payment, and order history.
 <div align="center">
   <table>
     <tr>
+      <td align="center"><img src="assets/mdImages/Onboard-1.png" alt="Home screen" width="180" /><br /></td>
+      <td align="center"><img src="assets/mdImages/Onboard-2.png" alt="Search screen" width="180" /></td>
+      <td align="center"><img src="assets/mdImages/Onboard-3.png" alt="Filter screen" width="180" /></td>
+    </tr>
+    <tr>
+      <td align="center"><img src="assets/mdImages/Onboard-1-2.png" alt="Product details screen" width="180" /></td>
+      <td align="center"><img src="assets/mdImages/Onboard-2-2.png" alt="Shopping cart screen" width="180" /></td>
+      <td align="center"><img src="assets/mdImages/Onboard-3-3.png" alt="Checkout screen" width="180" /></td>
+    </tr>
+  </table>
+</div>
+</br>
+</br>
+
+<div align="center">
+  <table>
+    <tr>
       <td align="center"><img src="assets/mdImages/Home.png" alt="Home screen" width="180" /><br /><strong>Home</strong></td>
       <td align="center"><img src="assets/mdImages/Search.png" alt="Search screen" width="180" /><br /><strong>Search</strong></td>
-      <td align="center"><img src="assets/mdImages/Filter.png" alt="Filter screen" width="180" /><br /><strong>Filters</strong></td>
+      <td align="center"><img src="assets/mdImages/Home-2.png" alt="Filter screen" width="180" /><br /><strong>Filters</strong></td>
       <td align="center"><img src="assets/mdImages/Best%20Seller.png" alt="Best seller screen" width="180" /><br /><strong>Best Sellers</strong></td>
     </tr>
     <tr>
       <td align="center"><img src="assets/mdImages/Details.png" alt="Product details screen" width="180" /><br /><strong>Product Details</strong></td>
       <td align="center"><img src="assets/mdImages/My%20Cart.png" alt="Shopping cart screen" width="180" /><br /><strong>Cart</strong></td>
-      <td align="center"><img src="assets/mdImages/Checkout.png" alt="Checkout screen" width="180" /><br /><strong>Checkout</strong></td>
+      <td align="center"><img src="assets/mdImages/Checkout.png" alt="Checkout details" width="180" /><br /><strong>Checkout</strong></td>
+      <td align="center"><img src="assets/mdImages/Checkout-3.png" alt="Checkout screen" width="180" /><br /><strong>Checkout</strong></td>
       <td align="center"><img src="assets/mdImages/Profile.png" alt="Profile screen" width="180" /><br /><strong>Profile</strong></td>
     </tr>
   </table>
@@ -59,13 +78,14 @@ location-aware checkout, payment, and order history.
 <div align="center">
   <table>
     <tr>
-      <td align="center"><img src="assets/mdImages/Home-1.png" alt="Light version home screen" width="180" /></td>
-      <td align="center"><img src="assets/mdImages/Search-1.png" alt="Light version search screen" width="180" /></td>
-      <td align="center"><img src="assets/mdImages/Details-1.png" alt="Light version product details screen" width="180" /></td>
-      <td align="center"><img src="assets/mdImages/Checkout-1.png" alt="Light version checkout screen" width="180" /></td>
+      <td align="center"><img src="assets/mdImages/Home-4.png" alt="Light version home screen" width="180" /><br /><strong>Home</strong></td>
+      <td align="center"><img src="assets/mdImages/Search-2.png" alt="Light version search screen" width="180" /><br /><strong>Filter</strong></td>
+      <td align="center"><img src="assets/mdImages/Details-2.png" alt="Light version product details screen" width="180" /><br /><strong>Product Details</strong></td>
+      <td align="center"><img src="assets/mdImages/Checkout-5.png" alt="Light version checkout screen" width="180" /><br /><strong>Checkout Details</strong></td>
+      <td align="center"><img src="assets/mdImages/Checkout-6.png" alt="Checkout screen" width="180" /><br /><strong>Checkout</strong></td>
     </tr>
   </table>
-  <p><strong>Light version of the application</strong><br />النسخة الفاتحة من البرنامج</p>
+  <p><strong>Light version of the application</strong><br /></p>
 </div>
 
 ## Technology Stack
@@ -81,6 +101,16 @@ location-aware checkout, payment, and order history.
 | Networking           | Dio                                                           |
 | Maps and location    | `flutter_map`, `geolocator`, `geocoding`, and OpenStreetMap   |
 | Payments             | Paymob through secure API calls and WebView checkout          |
+
+## Architecture
+
+Each feature module follows Clean Architecture with three layers:
+
+- **Data:** Remote/local data sources, models, and repository implementations.
+- **Domain:** Entities, repository interfaces, and use cases (business logic).
+- **Presentation:** BLoC/Cubit state management, screens, and widgets.
+
+This separation keeps business logic independent from UI and data sources, making features easier to test, maintain, and extend.
 
 ## Project Structure
 
@@ -121,8 +151,17 @@ lib/
    contains generated Firebase configuration files; replace them with your
    project configuration when using a different Firebase project.
 
-3. Add the required environment and payment settings to `env.json`. Keep
-   private credentials out of source control.
+3. Add the required environment and payment settings to `env.json` at the
+   project root. Keep private credentials out of source control. Example:
+
+   ```json
+   {
+     "PAYMOB_API_KEY": "your_paymob_api_key",
+     "PAYMOB_INTEGRATION_ID": "your_integration_id",
+     "PAYMOB_IFRAME_ID": "your_iframe_id",
+     "PAYMOB_HMAC_SECRET": "your_hmac_secret"
+   }
+   ```
 
 4. Run the application on a connected device or emulator:
 
@@ -150,13 +189,11 @@ dart run build_runner build --delete-conflicting-outputs
 - Payment credentials are environment-specific and should never be hard-coded or committed.
 - Android and iOS platform permissions must be configured before testing maps, location, notifications, or payments.
 
-## Contributing
-
-1. Create a focused branch for your change.
-2. Keep new code inside the appropriate feature and architecture layer.
-3. Run `flutter analyze` and `flutter test` before opening a pull request.
-4. Include screenshots or a short behavior description for user-facing changes.
-
 ## License
 
-This project is not currently published under an open-source license.
+This project is not currently published under an open-source license. All rights reserved.
+
+## Author
+
+**Abdulrhman**
+Flutter & Android Native (Kotlin) Developer
